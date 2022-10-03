@@ -15,18 +15,18 @@ function BasicExample() {
             <h4 className="box-label">Найти посетителя</h4>
             <Form.Group className="mb-3 form-item-box" controlId="formBasicEmail">
                 <Form.Label>Имя</Form.Label>
-                <Form.Control type="text" placeholder="Введите имя нового посетителя"/>
+                <Form.Control type="text" placeholder="Введите имя посетителя"/>
             </Form.Group>
             <Form.Group className="mb-3 form-item-box" controlId="formBasicPassword">
                 <Form.Label>Телефон</Form.Label>
                 <PhoneInput
-                    placeholder="Телефон"
+                    placeholder="+7 (777) 123 4567"
                     value={value}
                     onChange={() => setValue(value)}
                 />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Подтвердить
+                Найти
             </Button>
         </Form>
     );

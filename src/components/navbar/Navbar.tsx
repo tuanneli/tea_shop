@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './Navbar.css';
-import {AccountCircle, Person, PersonAddAlt1} from "@mui/icons-material";
+import {AccountCircle, EmojiFoodBeverage, Person, PersonAddAlt1} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 
 
@@ -19,11 +19,14 @@ function ColorSchemesExample() {
                         <Nav className={'navbar-item'}> <Link className="link-style" to={"/addclient"}>Добавить
                             постетителя &nbsp;{<PersonAddAlt1/>}</Link>
                         </Nav>
+                        <Nav className={'navbar-item'}> <Link className="link-style" to={"/goodslist"}>Список
+                            товаров &nbsp;{<EmojiFoodBeverage/>}</Link>
+                        </Nav>
                     </Nav>
                     <Nav>
                         <Nav className='navbar-item border-start border-white'> <Link className="link-style"
-                                                                                      to={"/login"}>{
-                            <AccountCircle/>} Логин </Link></Nav>
+                                                                                      to={"/register"}>{
+                            <AccountCircle/>} Регистрация </Link></Nav>
                     </Nav>
                 </Container>
             </Navbar>

@@ -20,13 +20,13 @@ function BasicExample() {
             <Form.Group className="mb-3 form-item-box" controlId="formBasicPassword">
                 <Form.Label>Телефон</Form.Label>
                 <PhoneInput
-                    placeholder="Телефон"
+                    placeholder="+7 (777) 123 4567"
                     value={value}
                     onChange={() => setValue(value)}
                 />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Подтвердить
+                Добавить
             </Button>
         </Form>
     );
