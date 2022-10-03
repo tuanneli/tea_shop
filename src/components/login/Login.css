@@ -1,0 +1,15 @@
+.form-box {
+    width: 400px;
+    margin: 25px auto auto;
+    border-radius: 15px;
+}
+
+.form-item-box {
+    height: 80px;
+}
+
+.box-label {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+}
