@@ -1,33 +1,33 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Login.css';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import Error from "../error/Error";
-import {useEmailPasswordValidation} from "../../hooks/validationHooks";
+import {useAuthValidation} from "../../hooks/validationHooks";
 import {createUser} from "../../api/API";
-import {AxiosError} from "axios";
-
 
 function BasicExample() {
 
     const [email, setEmail] = useState<string>("");
+    const [name, setName] = useState<string>("");
     const [passwordFirst, setFirstPassword] = useState<string>("");
     const [passwordSecond, setSecondPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
-    const errorText = useEmailPasswordValidation(email, passwordFirst, passwordSecond);
+    const errorText = useAuthValidation(email, name, passwordFirst, passwordSecond);
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (errorText) {
             return setError(errorText)
         }
-        const resError = await createUser(email, passwordFirst);
-        console.log(resError)
+        const resError = await createUser(email, name, passwordFirst);
         if (resError) {
             return setError(resError)
         }
         setError("");
+        navigate('/home');
     }
 
     return (
@@ -38,6 +38,12 @@ function BasicExample() {
                 <Form.Control value={email} onChange={(e) => setEmail(e.target.value)} type="email"
                               className="form-control"
                               placeholder="Введите вашу почту"/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Имя</Form.Label>
+                <Form.Control value={name} onChange={(e) => setName(e.target.value)} type="text"
+                              className="form-control"
+                              placeholder="Введите ваше имя"/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Пароль</Form.Label>
@@ -53,7 +59,7 @@ function BasicExample() {
                 {error && <Error error={error}/>}
             </Form.Group>
             <Form.Group className="submit-or-enter">
-                <Button onClick={handleSubmit} variant="primary" type="submit">
+                <Button onClick={handleSubmit} variant="outline-light " type="submit">
                     Зарегестрироваться
                 </Button>
                 или
