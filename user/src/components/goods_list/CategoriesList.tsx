@@ -6,7 +6,7 @@ import "./Goods.css";
 import Button from "react-bootstrap/Button";
 import AddCategory from "./AddCategory";
 import {GoodsService} from "../../api/API";
-import {ICategory} from "../../types/itemsTypes";
+import {ICategory} from "../../types/goodsTypes";
 
 const CategoriesList = () => {
 

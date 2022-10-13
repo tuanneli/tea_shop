@@ -7,26 +7,29 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 
 function BasicExample() {
-
-    const [value, setValue] = useState<any>();
+    const [name, setName] = useState<string>("");
+    const [phone, setPhone] = useState<string>("");
 
     return (
         <Form className="p-5 form-box bg-dark text-white">
-            <h4 className="box-label">Добавить посетителя</h4>
+            <h4 className="box-label">Найти посетителя</h4>
             <Form.Group className="mb-3 form-item-box" controlId="formBasicEmail">
                 <Form.Label>Имя</Form.Label>
-                <Form.Control type="text" placeholder="Введите имя нового посетителя"/>
+                <Form.Control type="text"
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                              placeholder="Введите имя посетителя"/>
             </Form.Group>
             <Form.Group className="mb-3 form-item-box" controlId="formBasicPassword">
                 <Form.Label>Телефон</Form.Label>
                 <PhoneInput
                     placeholder="+7 (777) 123 4567"
-                    value={value}
-                    onChange={() => setValue(value)}
+                    value={phone}
+                    onChange={(e) => setPhone(String(e))}
                 />
             </Form.Group>
             <Button variant="primary" type="submit">
-                Добавить
+                Найти
             </Button>
         </Form>
     );

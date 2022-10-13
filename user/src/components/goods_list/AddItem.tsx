@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Dropdown, Form} from "react-bootstrap";
 import {Context} from "../../index";
-import {ICategory, IItem} from "../../types/itemsTypes";
+import {ICategory, IItem} from "../../types/goodsTypes";
 import {observer} from "mobx-react-lite";
 import {GoodsService} from "../../api/API";
 import "./Goods.css";

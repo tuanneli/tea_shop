@@ -1,7 +1,8 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {$host, baseURL} from "../http/http";
 import {IResponse, IUser} from "../types/authTypes";
-import {ICategory, ICreateItem, IItem} from "../types/itemsTypes";
+import {ICategory, ICreateItem, IItem} from "../types/goodsTypes";
+import {ICustomer} from "../types/customerTypes";
 
 export class AuthService {
     static async register(email: string, name: string, password: string): Promise<AxiosResponse<IResponse>> {
@@ -81,5 +82,23 @@ export class GoodsService {
                 name
             }
         });
+    }
+}
+
+export class CustomerService {
+    static async registerCustomer(name: string, phone: string): Promise<AxiosResponse<ICustomer>> {
+        return $host.post<ICustomer>(`${baseURL}/customer/register`, {name, phone});
+    }
+
+    static async findCustomer(phone: string): Promise<AxiosResponse<ICustomer>> {
+        return $host.get<ICustomer>(`${baseURL}/customer/findone`, {
+            data: {
+                phone
+            }
+        });
+    }
+
+    static async findCustomers(): Promise<AxiosResponse<ICustomer[]>> {
+        return $host.get<ICustomer[]>(`${baseURL}/customer/findall`);
     }
 }

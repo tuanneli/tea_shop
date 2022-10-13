@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {GoodsService, UsersService} from "../../api/API";
-import {IItem} from "../../types/itemsTypes";
+import {IItem} from "../../types/goodsTypes";
 import AddItem from "./AddItem";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";

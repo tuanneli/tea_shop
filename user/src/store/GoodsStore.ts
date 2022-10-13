@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {ICategory, IItem} from "../types/itemsTypes";
+import {ICategory, IItem} from "../types/goodsTypes";
 import {AuthService, GoodsService} from "../api/API";
 
 export default class GoodsStore {
