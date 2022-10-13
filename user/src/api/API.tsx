@@ -91,11 +91,7 @@ export class CustomerService {
     }
 
     static async findCustomer(phone: string): Promise<AxiosResponse<ICustomer>> {
-        return $host.get<ICustomer>(`${baseURL}/customer/findone`, {
-            data: {
-                phone
-            }
-        });
+        return $host.post<ICustomer>(`${baseURL}/customer/findone`, {phone});
     }
 
     static async findCustomers(): Promise<AxiosResponse<ICustomer[]>> {

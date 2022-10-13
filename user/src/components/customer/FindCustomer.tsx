@@ -1,25 +1,31 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import {useState} from "react";
+import {useContext, useState} from "react";
 import "../login/Login.css";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import {CustomerService} from "../../api/API";
+import CustomerStore from "../../store/CustomerStore";
+import {Context} from "../../index";
+import {useNavigate} from "react-router-dom";
 
 function BasicExample() {
-    const [name, setName] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
+    const {customerStore} = useContext(Context);
+    const navigate = useNavigate();
+
+    const handleClick = async (e: any) => {
+        e.preventDefault();
+        const customer = await customerStore.getCustomer(phone);
+        console.log(customer);
+        navigate('/customer')
+    }
+
 
     return (
         <Form className="p-5 form-box bg-dark text-white">
             <h4 className="box-label">Найти посетителя</h4>
-            <Form.Group className="mb-3 form-item-box" controlId="formBasicEmail">
-                <Form.Label>Имя</Form.Label>
-                <Form.Control type="text"
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                              placeholder="Введите имя посетителя"/>
-            </Form.Group>
             <Form.Group className="mb-3 form-item-box" controlId="formBasicPassword">
                 <Form.Label>Телефон</Form.Label>
                 <PhoneInput
@@ -28,7 +34,9 @@ function BasicExample() {
                     onChange={(e) => setPhone(String(e))}
                 />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary"
+                    onClick={handleClick}
+                    type="submit">
                 Найти
             </Button>
         </Form>

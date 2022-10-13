@@ -1,18 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {GoodsService, UsersService} from "../../api/API";
-import {IItem} from "../../types/goodsTypes";
-import AddItem from "./AddItem";
 import {Context} from "../../index";
+import {IShoppingCart} from "../../types/customerTypes";
 import {observer} from "mobx-react-lite";
-import "./Goods.css";
+import {log} from "util";
 
-const GoodsList = () => {
-    const [item, setItem] = useState<IItem>();
-    const [error, setError] = useState<string>("");
-    const [newItem, setNewItem] = useState<boolean>(false);
-    const [isActive, setIsActive] = useState<boolean>(false);
-    const {goodsStore} = useContext(Context);
-    const {userStore} = useContext(Context);
+const CustomerGoods = () => {
+
+    const {goodsStore, shoppingCartStore} = useContext(Context);
 
     const getAllItems = () => {
         try {
@@ -25,24 +19,13 @@ const GoodsList = () => {
 
     useEffect(() => {
         getAllItems();
-    }, [isActive])
+    }, [])
 
-    const handleDelete = (name: string) => {
-        GoodsService.deleteItem(name).then(() => {
-            getAllItems();
-        });
-    };
-
-    const handleChange = (item: IItem) => {
-        setNewItem(false);
-        setIsActive(true);
-        setItem(item);
+    const addToShoppingCartHandler = (name: string, price: string) => {
+        shoppingCartStore.addItemToShoppingCart(name, price);
     }
 
-    const handleAddItem = () => {
-        setNewItem(true);
-        setIsActive(true);
-    }
+    // shoppingCartStore.shoppingCart.map(item => console.log(item.name, item.amount))
 
     return (
         <div>
@@ -67,22 +50,16 @@ const GoodsList = () => {
                                     <div className="worker-item">{item.category.name}</div>
                                     <div className="worker-item">{item.inStock ? "Да" : "Нет"}</div>
                                     <div className="worker-item">{item.inAction ? "Да" : "Нет"}</div>
-                                    <button onClick={() => handleDelete(item.name)}>X
-                                    </button>
-                                    <button onClick={() => handleChange(item)}>Изменить
+                                    <button onClick={() => addToShoppingCartHandler(item.name, item.price)}>Добавить
                                     </button>
                                 </div>
                             </div>
                         }
                     })}
-                    <div className='w-100 d-flex'>
-                        <button onClick={handleAddItem}>Добавить товар</button>
-                    </div>
                 </div>
             </div>
-            <AddItem newItem={newItem} show={isActive} setShow={setIsActive} item={item as IItem}/>
         </div>
     );
 };
 
-export default observer(GoodsList);
+export default observer(CustomerGoods);

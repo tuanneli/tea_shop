@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {Context} from "../../index";
+import {Col, Row} from "react-bootstrap";
+import CustomerInfo from "./CustomerInfo";
+import CustomerGoods from "./CustomerGoods";
+import ShoppingCart from "./ShoppingCart";
 
 const CustomerPage = () => {
     return (
-        <div>
-            Here will be info about our customer
-        </div>
+        <Row>
+            <Col md={3}>
+                <CustomerInfo/>
+            </Col>
+            <Col md={3}>
+                <ShoppingCart/>
+            </Col>
+            <Col md={6}>
+                <CustomerGoods/>
+            </Col>
+        </Row>
     );
 };
 

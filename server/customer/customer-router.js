@@ -7,7 +7,7 @@ const router = new Router();
 router.post('/register',
     body('phone').isMobilePhone().isLength({min: 11, max: 12}),
     CustomerController.register);
-router.get('/findone', CustomerController.findOne);
+router.post('/findone', CustomerController.findOne);
 router.get('/findall', CustomerController.findAll);
 
 export default router;

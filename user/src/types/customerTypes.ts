@@ -11,3 +11,9 @@ export interface IOrders {
     name: string
     amount: number
 }
+
+export interface IShoppingCart {
+    name: string,
+    price: string,
+    amount: number,
+}
