@@ -1,6 +1,6 @@
-import Item from "../module/Item.js";
-import ApiError from "../../auth/error/ApiError.js";
-import Category from "../module/Category.js";
+import Item from "../modules/Item.js";
+import ApiError from "../../error/ApiError.js";
+import Category from "../modules/Category.js";
 
 
 class ItemService {
@@ -13,7 +13,10 @@ class ItemService {
         if (!categoryData) {
             throw ApiError.badRequest('Такой категории не существует');
         }
-        return await Item.create({name, price, inStock, inAction, category});
+        console.log(category)
+        console.log(categoryData)
+        console.log(categoryData._id)
+        return await Item.create({name, price, inStock, inAction, category: categoryData._id});
     }
 
     async changeItem(_id, name, price, inStock, inAction, category) {
@@ -30,7 +33,7 @@ class ItemService {
             price: price,
             inStock: inStock,
             inAction: inAction,
-            category: category
+            category: categoryData._id
         });
     }
 
@@ -43,7 +46,7 @@ class ItemService {
     }
 
     async getItems() {
-        return Item.find();
+        return Item.find({}).populate({path: 'category', model: 'Category'});
     }
 
     async deleteItem(name) {

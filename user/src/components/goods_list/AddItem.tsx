@@ -43,7 +43,7 @@ const AddItem = ({newItem, show, setShow, item}: IAddItem) => {
             setInStock(item.inStock as boolean);
             setName(item.name);
             setPrice(item.price);
-            setCategory(item.category);
+            setCategory(item.category.name);
         }
     }, [item])
 

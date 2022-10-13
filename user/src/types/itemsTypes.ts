@@ -4,6 +4,15 @@ export interface IItem {
     price: string,
     inStock?: boolean,
     inAction?: boolean,
+    category: ICategory,
+}
+
+export interface ICreateItem {
+    _id?: string,
+    name: string,
+    price: string,
+    inStock?: boolean,
+    inAction?: boolean,
     category: string,
 }
 

@@ -1,5 +1,5 @@
-import Category from "../module/Category.js";
-import ApiError from "../../auth/error/ApiError.js";
+import Category from "../modules/Category.js";
+import ApiError from "../../error/ApiError.js";
 
 class CategoryService {
     async addCategory(name) {

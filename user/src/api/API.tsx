@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {$host, baseURL} from "../http/http";
 import {IResponse, IUser} from "../types/authTypes";
-import {ICategory, IItem} from "../types/itemsTypes";
+import {ICategory, ICreateItem, IItem} from "../types/itemsTypes";
 
 export class AuthService {
     static async register(email: string, name: string, password: string): Promise<AxiosResponse<IResponse>> {
@@ -32,7 +32,7 @@ export class UsersService {
 }
 
 export class GoodsService {
-    static async createItem({name, price, inStock, inAction, category}: IItem): Promise<AxiosResponse<IItem>> {
+    static async createItem({name, price, inStock, inAction, category}: ICreateItem): Promise<AxiosResponse<IItem>> {
         return $host.post<IItem>(`${baseURL}/goods/additem`, {name, price, inStock, inAction, category});
     }
 
@@ -52,7 +52,14 @@ export class GoodsService {
         });
     }
 
-    static async changeItem({_id, name, price, inStock, inAction, category}: IItem): Promise<AxiosResponse<IItem>> {
+    static async changeItem({
+                                _id,
+                                name,
+                                price,
+                                inStock,
+                                inAction,
+                                category
+                            }: ICreateItem): Promise<AxiosResponse<IItem>> {
         return $host.put<IItem>(`${baseURL}/goods/changeitem`, {_id, name, price, inStock, inAction, category});
     }
 
@@ -65,7 +72,6 @@ export class GoodsService {
     }
 
     static async changeCategory(_id: string, name: string): Promise<AxiosResponse<ICategory>> {
-        console.log(_id, name);
         return $host.put<ICategory>(`${baseURL}/goods/changecategory`, {_id, name});
     }
 

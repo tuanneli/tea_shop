@@ -5,7 +5,7 @@ import {cookie, validationResult} from "express-validator";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import AuthService from "./service/authService.js";
-import ApiError from "./error/ApiError.js";
+import ApiError from "../error/ApiError.js";
 
 dotenv.config();
 

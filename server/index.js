@@ -6,6 +6,7 @@ import * as dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import goodsRouter from "./goods/goods-router.js";
 import errorMiddleware from "./auth/middleware/error-middleware.js";
+import customerRouter from "./customer/customer-router.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use('/goods', goodsRouter);
+app.use('/customer', customerRouter);
 app.use(errorMiddleware);
 
 

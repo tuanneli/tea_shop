@@ -5,7 +5,7 @@ const Item = new Schema({
     price: {type: Number, required: true},
     inStock: {type: Boolean},
     inAction: {type: Boolean},
-    category: {type: String, ref: 'Category', required: true},
+    category: {type: Schema.Types.ObjectId, ref: 'Category', required: true},
 });
 
 export default model('Item', Item);

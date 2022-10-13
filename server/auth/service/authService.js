@@ -2,12 +2,12 @@ import {validationResult} from "express-validator";
 import User from "../modules/User.js";
 import Role from "../modules/Role.js";
 import * as uuid from 'uuid';
-import UserDto from "../dto/userDto.js";
+import UserDto from "../../dto/userDto.js";
 import TokenService from "./tokenService.js";
 import MailService from "./mail-service.js";
 import bcrypt from "bcryptjs";
 import tokenService from "./tokenService.js";
-import ApiError from "../error/ApiError.js";
+import ApiError from "../../error/ApiError.js";
 
 class AuthService {
     async registration(email, name, password) {

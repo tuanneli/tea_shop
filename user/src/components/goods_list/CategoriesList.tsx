@@ -17,6 +17,7 @@ const CategoriesList = () => {
 
     const getAllCategories = () => {
         try {
+            goodsStore.getGoods();
             goodsStore.getCategories();
         } catch (e) {
             console.log(e);

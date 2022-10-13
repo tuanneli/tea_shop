@@ -3,7 +3,6 @@ import Token from "../modules/Token.js";
 
 class TokenService {
     generateTokens(module) {
-        console.log(module)
         const accessToken = jwt.sign(module, process.env.JWT_ACCESS, {expiresIn: '15min'});
         const refreshToken = jwt.sign(module, process.env.JWT_REFRESH, {expiresIn: '60d'});
         return {
