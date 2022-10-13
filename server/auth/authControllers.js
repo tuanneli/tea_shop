@@ -4,18 +4,10 @@ import bcrypt from "bcryptjs";
 import {cookie, validationResult} from "express-validator";
 import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import ApiError from "../error/ApiError.js";
 import AuthService from "./service/authService.js";
+import ApiError from "./error/ApiError.js";
 
 dotenv.config();
-
-const generateWebToken = (id, roles) => {
-    const payload = {
-        id,
-        roles
-    }
-    return jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: '24h'});
-}
 
 class AuthControllers {
 

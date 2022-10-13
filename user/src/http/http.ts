@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
-import {IResponse} from "../api/API";
+import {IResponse} from "../types/authTypes";
 
-export const baseURL = 'http://localhost:5000/auth';
+export const baseURL = 'http://localhost:5000';
 
 const $host = axios.create({
     withCredentials: true,

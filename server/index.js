@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 import authRoutes from "./auth/authRoutes.js";
 import cors from "cors";
 import * as dotenv from 'dotenv';
-import errorMiddleware from "./middleware/error-middleware.js";
 import cookieParser from 'cookie-parser';
+import goodsRouter from "./goods/goods-router.js";
+import errorMiddleware from "./auth/middleware/error-middleware.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use('/auth', authRoutes);
+app.use('/goods', goodsRouter);
 app.use(errorMiddleware);
 
 

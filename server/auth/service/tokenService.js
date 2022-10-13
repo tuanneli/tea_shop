@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken'
 import Token from "../modules/Token.js";
-import ApiError from "../../error/ApiError.js";
 
 class TokenService {
     generateTokens(module) {

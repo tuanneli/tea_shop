@@ -10,6 +10,7 @@ import GoodsList from "./goods_list/GoodsList";
 import Workers from "./workers/Workers";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
+import GoodsPanel from "./goods_list/GoodsPanel";
 
 const MainPage = observer(() => {
 
@@ -45,7 +46,7 @@ const MainPage = observer(() => {
                     <Route path={'/register'} element={<Register/>}/>
                     <Route path={'/login'} element={<Login/>}/>
                     <Route path={'/addclient'} element={<AddClient/>}/>
-                    <Route path={'/goodslist'} element={<GoodsList/>}/>
+                    <Route path={'/goodslist'} element={<GoodsPanel/>}/>
                     <Route path={'/workers'} element={<Workers/>}/>
                     <Route path={'/*'} element={<Home/>}/>
                 </Routes>

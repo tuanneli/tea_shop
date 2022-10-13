@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {dividerClasses} from "@mui/material";
 import "./Workers.css";
-import {IUser, UsersService} from "../../api/API";
+import {UsersService} from "../../api/API";
+import {IUser} from "../../types/authTypes";
+import {observer} from "mobx-react-lite";
 
 const Workers = () => {
 
@@ -49,4 +51,4 @@ const Workers = () => {
     );
 };
 
-export default Workers;
+export default observer(Workers);

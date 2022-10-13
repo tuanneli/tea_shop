@@ -1,97 +1,93 @@
-import React, {useState} from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-import {render} from "@testing-library/react";
+import React, {useContext, useEffect, useState} from 'react';
+import {GoodsService, UsersService} from "../../api/API";
+import {IItem} from "../../types/itemsTypes";
+import AddItem from "./AddItem";
+import {Context} from "../../index";
+import {flowResult} from "mobx";
+import {observer} from "mobx-react-lite";
+import "./Goods.css";
 
-export default function GoodsList() {
-    const [validated, setValidated] = useState(false);
+const GoodsList = () => {
 
-    const handleSubmit = (event: any) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
+    const [items, setItems] = useState<IItem[]>([]);
+    const [item, setItem] = useState<IItem>();
+    const [error, setError] = useState<string>("");
+    const [newItem, setNewItem] = useState<boolean>(false);
+    const [isActive, setIsActive] = useState<boolean>(false);
+    const {goodsStore} = useContext(Context);
+    const {userStore} = useContext(Context);
+
+    const getAllItems = () => {
+        try {
+            goodsStore.getGoods().then((result) => {
+                setItems(result.data);
+            });
+            goodsStore.getCategories();
+        } catch (e) {
+            console.log(e);
         }
+    }
 
-        setValidated(true);
+    useEffect(() => {
+        getAllItems();
+    }, [isActive])
+
+    const handleDelete = (name: string) => {
+        GoodsService.deleteItem(name).then(() => {
+            getAllItems();
+        });
     };
 
-    return (
-        <Form noValidate validated={validated} onSubmit={handleSubmit}>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="4" controlId="validationCustom01">
-                    <Form.Label>First name</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="First name"
-                        defaultValue="Mark"
-                    />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustom02">
-                    <Form.Label>Last name</Form.Label>
-                    <Form.Control
-                        required
-                        type="text"
-                        placeholder="Last name"
-                        defaultValue="Otto"
-                    />
-                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-                    <Form.Label>Username</Form.Label>
-                    <InputGroup hasValidation>
-                        <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-                        <Form.Control
-                            type="text"
-                            placeholder="Username"
-                            aria-describedby="inputGroupPrepend"
-                            required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                            Please choose a username.
-                        </Form.Control.Feedback>
-                    </InputGroup>
-                </Form.Group>
-            </Row>
-            <Row className="mb-3">
-                <Form.Group as={Col} md="6" controlId="validationCustom03">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control type="text" placeholder="City" required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please provide a valid city.
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationCustom04">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control type="text" placeholder="State" required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please provide a valid state.
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group as={Col} md="3" controlId="validationCustom05">
-                    <Form.Label>Zip</Form.Label>
-                    <Form.Control type="text" placeholder="Zip" required/>
-                    <Form.Control.Feedback type="invalid">
-                        Please provide a valid zip.
-                    </Form.Control.Feedback>
-                </Form.Group>
-            </Row>
-            <Form.Group className="mb-3">
-                <Form.Check
-                    required
-                    label="Agree to terms and conditions"
-                    feedback="You must agree before submitting."
-                    feedbackType="invalid"
-                />
-            </Form.Group>
-            <Button type="submit">Submit form</Button>
-        </Form>
-    );
-}
+    const handleChange = (item: IItem) => {
+        setNewItem(false);
+        setIsActive(true);
+        setItem(item);
+    }
 
-// render(<GoodsList/>);
+    const handleAddItem = () => {
+        setNewItem(true);
+        setIsActive(true);
+    }
+
+    return (
+        <div>
+            <div className="d-flex justify-content-center">
+                <div>
+                    <div className="bg-dark text-white workers-box">
+                        <div className="worker-row">
+                            <div className="worker-item justify-content-center">Название</div>
+                            <div className="worker-item justify-content-center">Цена</div>
+                            <div className="worker-item justify-content-center">Тип</div>
+                            <div className="worker-item justify-content-center">В наличии</div>
+                            <div className="worker-item justify-content-center">В акции</div>
+                            <div style={{border: "none", width: "75px", backgroundColor: "white"}}></div>
+                        </div>
+                    </div>
+                    {items.length !== 0 && items.map(item => {
+                        if (item.category == goodsStore.categorySorted || goodsStore.categorySorted == "all") {
+                            return <div key={item.name} className="bg-dark text-white workers-box">
+                                <div className="worker-row">
+                                    <div className="worker-item">{item.name}</div>
+                                    <div className="worker-item">{item.price}</div>
+                                    <div className="worker-item">{item.category}</div>
+                                    <div className="worker-item">{item.inStock ? "Да" : "Нет"}</div>
+                                    <div className="worker-item">{item.inAction ? "Да" : "Нет"}</div>
+                                    <button onClick={() => handleDelete(item.name)}>X
+                                    </button>
+                                    <button onClick={() => handleChange(item)}>Изменить
+                                    </button>
+                                </div>
+                            </div>
+                        }
+                    })}
+                    <div className='w-100 d-flex'>
+                        <button onClick={handleAddItem}>Добавить товар</button>
+                    </div>
+                </div>
+            </div>
+            <AddItem newItem={newItem} show={isActive} setShow={setIsActive} item={item as IItem}/>
+        </div>
+    );
+};
+
+export default observer(GoodsList);

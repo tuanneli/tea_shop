@@ -1,3 +1,8 @@
+.category-group-item {
+    cursor: pointer;
+    border: 1px solid black;
+}
+
 .workers-box {
     padding: 5px;
     width: 500px
@@ -5,7 +10,8 @@
 
 .worker-row {
     display: flex;
-    border: 1px solid
+    border: 1px solid;
+    justify-content: space-between;
 }
 
 .worker-item {
@@ -15,11 +21,6 @@
     display: flex;
     align-items: center;
     word-break: break-all;
-}
-
-.delete-button {
-    border: none;
-    width: 40px;
 }
 
 .delete-button:hover {

@@ -2,7 +2,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import './Navbar.css';
-import {AccountCircle, EmojiFoodBeverage, Person, PersonAddAlt1, Engineering} from "@mui/icons-material";
+import {
+    AccountCircle,
+    EmojiFoodBeverage,
+    Person,
+    PersonAddAlt1,
+    Engineering,
+    Logout,
+    MeetingRoom, MeetingRoomOutlined, DoorBack
+} from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import {useContext} from "react";
 import {Context} from "../../index";
@@ -44,7 +52,8 @@ const ColorSchemesExample = observer(() => {
                         </Nav>
                         :
                         <Nav className='navbar-item border-start border-white'>
-                            <Link to={'/home'} className="link-style" onClick={handleExit}>Выйти</Link>
+                            <Link to={'/home'} className="link-style" onClick={handleExit}>Выйти &nbsp;{
+                                <Logout/>}</Link>
                         </Nav>
                     }
 
