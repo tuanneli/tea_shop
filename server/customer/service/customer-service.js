@@ -23,6 +23,16 @@ class CustomerService {
     async findAll() {
         return Customer.find();
     }
+
+    async addOrders(orders, total, phone) {
+        await Customer.findOneAndUpdate({phone}, {statistic: {total, orders}});
+        const customer = Customer.findOne({phone});
+        if (!customer) {
+            throw ApiError.badRequest('Такого клиента нет');
+        }
+        console.log(customer);
+        return customer;
+    }
 }
 
 export default new CustomerService();

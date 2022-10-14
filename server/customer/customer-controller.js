@@ -35,6 +35,16 @@ class CustomerController {
             next(e);
         }
     }
+
+    async addOrders(req, res, next) {
+        try {
+            const {orders, total, phone} = req.body;
+            const customer = await CustomerService.addOrders(orders, total, phone);
+            return res.status(200).json(customer);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new CustomerController();

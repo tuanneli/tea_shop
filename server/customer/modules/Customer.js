@@ -6,7 +6,7 @@ const Customer = new Schema({
     statistic: {
         total: {type: Number, default: 0},
         orders: [{
-            name: {type: Schema.Types.ObjectId, ref: 'Item'},
+            name: {type: String, ref: 'Item'},
             amount: {type: Number, default: 0},
         }]
     }

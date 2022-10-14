@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {Context} from "../../index";
+import {observer} from "mobx-react-lite";
 
 const CustomerInfo = () => {
     const {customerStore} = useContext(Context);
@@ -11,7 +12,7 @@ const CustomerInfo = () => {
             <div>Всего заказов: {customerStore.customer?.statistic?.total}</div>
             <div>
                 {customerStore.customer?.statistic?.orders.map((order) =>
-                    <div>
+                    <div key={order?.name}>
                         <div>{order?.name}</div>
                         <div>{order?.amount}</div>
                     </div>)}
@@ -20,4 +21,4 @@ const CustomerInfo = () => {
     );
 };
 
-export default CustomerInfo;
+export default observer(CustomerInfo);

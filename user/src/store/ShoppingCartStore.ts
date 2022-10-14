@@ -19,6 +19,14 @@ export default class ShoppingCartStore {
         return this._amountOfItemsInCart;
     }
 
+    setShoppingCart(ShoppingCart: IShoppingCart[]) {
+        this._shoppingCart = ShoppingCart;
+    }
+
+    setAmountOfItemsInCart(number: number) {
+        this._amountOfItemsInCart = number;
+    }
+
     addAmountOfItemsInCart() {
         return this._amountOfItemsInCart = this._amountOfItemsInCart + 1;
     }
@@ -29,28 +37,28 @@ export default class ShoppingCartStore {
 
     addItemToShoppingCart(name: string, price: string) {
         this.addAmountOfItemsInCart();
-        const isInCart = this._shoppingCart.find(item => item.name === name);
+        const isInCart = this.shoppingCart.find(item => item.name === name);
         if (isInCart) {
-            return this._shoppingCart = this._shoppingCart.map(item =>
-                item.name === name ? {...item, amount: item.amount + 1} : item)
+            return this.setShoppingCart(this.shoppingCart.map(item =>
+                item.name === name ? {...item, amount: item.amount + 1} : item));
         }
-        this._shoppingCart = [...this._shoppingCart, {name, price, amount: 1}]
+        this.setShoppingCart([...this.shoppingCart, {name, price, amount: 1}]);
     }
 
     removeItemFromShoppingCart = (name: string) => {
         this.subtractAmountOfItemsInCart();
-        this._shoppingCart = this._shoppingCart.reduce((prev, item) => {
+        this.setShoppingCart(this.shoppingCart.reduce((prev, item) => {
             if (item.name == name) {
                 if (item.amount === 1) return prev;
                 return [...prev, {...item, amount: item.amount - 1}]
             } else {
                 return [...prev, item]
             }
-        }, [] as IShoppingCart[])
+        }, [] as IShoppingCart[]));
     }
 
     clear() {
-        this._amountOfItemsInCart = 0;
-        this._shoppingCart = [] as IShoppingCart[];
+        this.setShoppingCart([] as IShoppingCart[]);
+        this.setAmountOfItemsInCart(0);
     }
 };

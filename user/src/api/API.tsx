@@ -2,7 +2,7 @@ import axios, {AxiosError, AxiosResponse} from "axios";
 import {$host, baseURL} from "../http/http";
 import {IResponse, IUser} from "../types/authTypes";
 import {ICategory, ICreateItem, IItem} from "../types/goodsTypes";
-import {ICustomer} from "../types/customerTypes";
+import {ICustomer, IOrders} from "../types/customerTypes";
 
 export class AuthService {
     static async register(email: string, name: string, password: string): Promise<AxiosResponse<IResponse>> {
@@ -96,5 +96,9 @@ export class CustomerService {
 
     static async findCustomers(): Promise<AxiosResponse<ICustomer[]>> {
         return $host.get<ICustomer[]>(`${baseURL}/customer/findall`);
+    }
+
+    static async addOrders(orders: IOrders[], total: number, phone: string): Promise<AxiosResponse<ICustomer>> {
+        return $host.put<ICustomer>(`${baseURL}/customer/addorders`, {orders, total, phone});
     }
 }

@@ -19,7 +19,7 @@ function BasicExample() {
     const handleClick = async (e: any) => {
         e.preventDefault();
         const customer = await customerStore.addCustomer(name, phone);
-        console.log(customer);
+        customerStore.setCustomer(customer);
         navigate('/customer')
     };
 

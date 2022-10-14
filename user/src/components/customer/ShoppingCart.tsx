@@ -2,14 +2,42 @@ import React, {useContext} from 'react';
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {buttonClasses} from "@mui/material";
+import {CustomerService} from "../../api/API";
 
 const ShoppingCart = () => {
 
-    const {shoppingCartStore} = useContext(Context);
+    const {shoppingCartStore, customerStore} = useContext(Context);
 
     const clearHandler = () => {
         shoppingCartStore.clear();
     }
+
+    const addItemsToUserHandler = () => {
+        customerStore.customer.statistic.total += shoppingCartStore.amountOfItemsInCart;
+        shoppingCartStore.shoppingCart.map((shoppingCartItem) => {
+            const isInCart = customerStore.customer.statistic.orders.find(item => item.name === shoppingCartItem.name);
+            if (isInCart) {
+                return customerStore.customer.statistic.orders = customerStore.customer.statistic.orders.map(item =>
+                    item.name === shoppingCartItem.name ? {
+                        ...item,
+                        amount: item.amount + shoppingCartItem.amount
+                    } : item);
+            }
+            customerStore.customer.statistic.orders = [...customerStore.customer.statistic.orders, {
+                name: shoppingCartItem.name,
+                amount: shoppingCartItem.amount
+            }]
+        });
+        shoppingCartStore.clear();
+        CustomerService.addOrders(customerStore.customer.statistic.orders, customerStore.customer.statistic.total, customerStore.customer.phone)
+            .then((response) => {
+                console.log(response.data)
+                customerStore.setCustomer(response.data)
+            });
+    }
+
+    // console.log(customerStore.customer?.statistic?.total);
+    // customerStore.customer?.statistic?.orders.map(item => console.log(item.name, item.amount));
 
     return (
         <div>
@@ -28,7 +56,7 @@ const ShoppingCart = () => {
             }, 0)} тг.
             </div>
             <button onClick={clearHandler}>Очистить</button>
-            <button>Добавить</button>
+            <button onClick={addItemsToUserHandler}>Добавить</button>
         </div>
     );
 };

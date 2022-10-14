@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
-import {IShoppingCart} from "../../types/customerTypes";
 import {observer} from "mobx-react-lite";
-import {log} from "util";
 
 const CustomerGoods = () => {
 
@@ -24,8 +22,6 @@ const CustomerGoods = () => {
     const addToShoppingCartHandler = (name: string, price: string) => {
         shoppingCartStore.addItemToShoppingCart(name, price);
     }
-
-    // shoppingCartStore.shoppingCart.map(item => console.log(item.name, item.amount))
 
     return (
         <div>
