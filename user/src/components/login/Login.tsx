@@ -20,6 +20,7 @@ const BasicExample = observer(() => {
     const handleLogin = async (e: any) => {
         e.preventDefault();
         const response = await userStore.login(email, password);
+        console.log(response)
         if (errorText) {
             return setError(errorText);
         }

@@ -38,9 +38,19 @@ class CustomerController {
 
     async addOrders(req, res, next) {
         try {
-            const {orders, total, phone} = req.body;
-            const customer = await CustomerService.addOrders(orders, total, phone);
+            const {orders, historyId, total, phone} = req.body;
+            const customer = await CustomerService.addOrders(orders, historyId, total, phone);
             return res.status(200).json(customer);
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    async addHistory(req, res, next) {
+        try {
+            const {history} = req.body;
+            const historyData = await CustomerService.addHistory(history);
+            return res.status(200).json(historyData);
         } catch (e) {
             next(e);
         }

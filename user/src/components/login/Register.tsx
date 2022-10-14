@@ -55,7 +55,7 @@ function BasicExample() {
                 <Form.Control value={passwordSecond} onChange={(e) => setSecondPassword(e.target.value)} type="password"
                               placeholder="Повторите пароль"/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-5" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Запомнить меня"/>
                 {error && <Error error={error}/>}
             </Form.Group>

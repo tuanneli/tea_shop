@@ -1,4 +1,5 @@
 import Customer from "../modules/Customer.js";
+import History from "../modules/History.js";
 import ApiError from "../../error/ApiError.js";
 import bcrypt from "bcryptjs";
 
@@ -13,7 +14,7 @@ class CustomerService {
     }
 
     async findOne(phone) {
-        const customer = await Customer.findOne({phone});
+        const customer = await Customer.findOne({phone}).populate({path: 'history', model: 'History'});
         if (!customer) {
             throw ApiError.badRequest('Такого клиента нет');
         }
@@ -24,14 +25,25 @@ class CustomerService {
         return Customer.find();
     }
 
-    async addOrders(orders, total, phone) {
-        await Customer.findOneAndUpdate({phone}, {statistic: {total, orders}});
-        const customer = Customer.findOne({phone});
+    async addOrders(orders, historyId, total, phone) {
+        const customerData = await Customer.findOne({phone}).populate({path: 'history', model: 'History'});
+        await Customer.findOneAndUpdate({phone}, {
+            statistic: {total, orders},
+            history: [...customerData.history, historyId]
+        });
+        const customer = await Customer.findOne({phone}).populate({path: 'history', model: 'History'});
         if (!customer) {
             throw ApiError.badRequest('Такого клиента нет');
         }
-        console.log(customer);
         return customer;
+    }
+
+    async addHistory(history) {
+        const historyData = History.create({order: history.order});
+        if (!historyData) {
+            throw ApiError.badRequest('Ошибка при создании');
+        }
+        return historyData;
     }
 }
 

@@ -9,7 +9,7 @@ import {
     PersonAddAlt1,
     Engineering,
     Logout,
-    MeetingRoom, MeetingRoomOutlined, DoorBack
+    MeetingRoom, MeetingRoomOutlined, DoorBack, PersonSearch
 } from "@mui/icons-material";
 import {Link} from "react-router-dom";
 import {useContext} from "react";
@@ -30,12 +30,12 @@ const ColorSchemesExample = observer(() => {
                 <Container className={'navbar-container'}>
                     <Nav className="me-auto">
                         <Nav className='navbar-item border-start border-white'> <Link className="link-style"
-                                                                                      to={'/info'}>Информация
+                                                                                      to={'/findCustomer'}>Информация
                             о
-                            песетителе &nbsp;{<Person/>}</Link> </Nav>
-                        <Nav className={'navbar-item'}> <Link className="link-style" to={"/addclient"}>Добавить
-                            постетителя &nbsp;{<PersonAddAlt1/>}</Link>
-                        </Nav>
+                            песетителе &nbsp;{<PersonSearch/>}</Link> </Nav>
+                        {/*<Nav className={'navbar-item'}> <Link className="link-style" to={"/addclient"}>Добавить*/}
+                        {/*    постетителя &nbsp;{<PersonAddAlt1/>}</Link>*/}
+                        {/*</Nav>*/}
                         <Nav className={'navbar-item'}> <Link className="link-style" to={"/goodslist"}>Список
                             товаров &nbsp;{<EmojiFoodBeverage/>}</Link>
                         </Nav>

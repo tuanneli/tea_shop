@@ -43,7 +43,7 @@ const MainPage = observer(() => {
             <>
                 <Navbar/>
                 <Routes>
-                    <Route path={'/info'} element={<FindCustomer/>}/>
+                    <Route path={'/findCustomer'} element={<FindCustomer/>}/>
                     <Route path={'/register'} element={<Register/>}/>
                     <Route path={'/login'} element={<Login/>}/>
                     <Route path={'/addclient'} element={<AddClient/>}/>

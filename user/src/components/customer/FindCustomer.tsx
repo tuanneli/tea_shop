@@ -8,7 +8,10 @@ import PhoneInput from 'react-phone-number-input'
 import {CustomerService} from "../../api/API";
 import CustomerStore from "../../store/CustomerStore";
 import {Context} from "../../index";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {PersonAddAlt1} from "@mui/icons-material";
+import Error from "../error/Error";
+import {observer} from "mobx-react-lite";
 
 function BasicExample() {
     const [phone, setPhone] = useState<string>("");
@@ -18,10 +21,10 @@ function BasicExample() {
     const handleClick = async (e: any) => {
         e.preventDefault();
         const customer = await customerStore.getCustomer(phone);
-        console.log(customer);
-        navigate('/customer')
+        if (customer) {
+            navigate('/customer');
+        }
     }
-
 
     return (
         <Form className="p-5 form-box bg-dark text-white">
@@ -33,14 +36,19 @@ function BasicExample() {
                     value={phone}
                     onChange={(e) => setPhone(String(e))}
                 />
+                {customerStore.errorMessage && <Error error={customerStore.errorMessage}/>}
             </Form.Group>
-            <Button variant="primary"
-                    onClick={handleClick}
-                    type="submit">
-                Найти
-            </Button>
+            <Form.Group className="submit-or-enter mt-4">
+                <Button variant="outline-light"
+                        onClick={handleClick}
+                        type="submit">
+                    Найти
+                </Button>
+                <div style={{color: 'gray'}}>или</div>
+                <Link to={'/addclient'} style={{color: 'white'}}>Добавить</Link>
+            </Form.Group>
         </Form>
     );
 }
 
-export default BasicExample;
+export default observer(BasicExample);

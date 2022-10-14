@@ -32,11 +32,11 @@ class AuthService {
     async login(email, password) {
         const user = await User.findOne({email});
         if (!user) {
-            return ApiError.badRequest(`User with email: ${email} was not found...`);
+            throw ApiError.badRequest(`Неверная почта или пароль`);
         }
         const validPassword = bcrypt.compareSync(password, user.password);
         if (!validPassword) {
-            return ApiError.badRequest("Incorrect password");
+            throw ApiError.badRequest("Неверная почта или пароль");
         }
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({userDto});
@@ -54,7 +54,7 @@ class AuthService {
     async activate(activationLink) {
         const user = await User.findOne({activationLink});
         if (!user) {
-            return ApiError.badRequest('Неверная ссылка активации');
+            throw ApiError.badRequest('Неверная ссылка активации');
         }
         user.isActivated = true;
         await user.save();

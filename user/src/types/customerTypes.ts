@@ -5,6 +5,7 @@ export interface ICustomer {
         total: number
         orders: IOrders[]
     }
+    history: IHistory[]
 }
 
 export interface IOrders {
@@ -16,4 +17,10 @@ export interface IShoppingCart {
     name: string,
     price: string,
     amount: number,
+}
+
+export interface IHistory {
+    _id?: string,
+    order: IShoppingCart[],
+    date?: string,
 }

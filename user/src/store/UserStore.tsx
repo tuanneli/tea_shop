@@ -57,7 +57,9 @@ export default class UserStore {
             localStorage.setItem('token', response.data.accessToken);
             this.setIsAuth(true);
             this.setUser(response.data.user);
+            console.log(response);
         } catch (e: any) {
+            console.log('error')
             console.log(e.response?.data?.message);
             return e.response?.data?.message;
         }

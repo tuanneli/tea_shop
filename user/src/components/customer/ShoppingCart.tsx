@@ -3,6 +3,7 @@ import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
 import {buttonClasses} from "@mui/material";
 import {CustomerService} from "../../api/API";
+import {IHistory} from "../../types/customerTypes";
 
 const ShoppingCart = () => {
 
@@ -12,7 +13,11 @@ const ShoppingCart = () => {
         shoppingCartStore.clear();
     }
 
-    const addItemsToUserHandler = () => {
+    const addItemToHistory = async () => {
+        await customerStore.addHistory({order: shoppingCartStore.shoppingCart});
+    }
+
+    const addItemToCustomer = () => {
         customerStore.customer.statistic.total += shoppingCartStore.amountOfItemsInCart;
         shoppingCartStore.shoppingCart.map((shoppingCartItem) => {
             const isInCart = customerStore.customer.statistic.orders.find(item => item.name === shoppingCartItem.name);
@@ -29,15 +34,16 @@ const ShoppingCart = () => {
             }]
         });
         shoppingCartStore.clear();
-        CustomerService.addOrders(customerStore.customer.statistic.orders, customerStore.customer.statistic.total, customerStore.customer.phone)
+        CustomerService.addOrders(customerStore.customer.statistic.orders, customerStore.history._id as string, customerStore.customer.statistic.total, customerStore.customer.phone)
             .then((response) => {
-                console.log(response.data)
                 customerStore.setCustomer(response.data)
             });
     }
 
-    // console.log(customerStore.customer?.statistic?.total);
-    // customerStore.customer?.statistic?.orders.map(item => console.log(item.name, item.amount));
+    const addItem = async () => {
+        await addItemToHistory();
+        addItemToCustomer();
+    }
 
     return (
         <div>
@@ -56,7 +62,7 @@ const ShoppingCart = () => {
             }, 0)} тг.
             </div>
             <button onClick={clearHandler}>Очистить</button>
-            <button onClick={addItemsToUserHandler}>Добавить</button>
+            <button onClick={addItem}>Добавить</button>
         </div>
     );
 };

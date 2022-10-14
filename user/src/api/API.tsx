@@ -2,7 +2,7 @@ import axios, {AxiosError, AxiosResponse} from "axios";
 import {$host, baseURL} from "../http/http";
 import {IResponse, IUser} from "../types/authTypes";
 import {ICategory, ICreateItem, IItem} from "../types/goodsTypes";
-import {ICustomer, IOrders} from "../types/customerTypes";
+import {ICustomer, IHistory, IOrders} from "../types/customerTypes";
 
 export class AuthService {
     static async register(email: string, name: string, password: string): Promise<AxiosResponse<IResponse>> {
@@ -94,11 +94,15 @@ export class CustomerService {
         return $host.post<ICustomer>(`${baseURL}/customer/findone`, {phone});
     }
 
+    static async addHistory(history: IHistory): Promise<AxiosResponse<IHistory>> {
+        return $host.post<IHistory>(`${baseURL}/customer/addhistory`, {history});
+    }
+
     static async findCustomers(): Promise<AxiosResponse<ICustomer[]>> {
         return $host.get<ICustomer[]>(`${baseURL}/customer/findall`);
     }
 
-    static async addOrders(orders: IOrders[], total: number, phone: string): Promise<AxiosResponse<ICustomer>> {
-        return $host.put<ICustomer>(`${baseURL}/customer/addorders`, {orders, total, phone});
+    static async addOrders(orders: IOrders[], historyId: string, total: number, phone: string): Promise<AxiosResponse<ICustomer>> {
+        return $host.put<ICustomer>(`${baseURL}/customer/addorders`, {orders, historyId, total, phone});
     }
 }

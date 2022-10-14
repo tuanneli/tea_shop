@@ -10,5 +10,6 @@ router.post('/register',
 router.post('/findone', CustomerController.findOne);
 router.get('/findall', CustomerController.findAll);
 router.put('/addorders', CustomerController.addOrders);
+router.post('/addhistory', CustomerController.addHistory)
 
 export default router;
