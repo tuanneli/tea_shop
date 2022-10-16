@@ -19,14 +19,14 @@ const CustomerPage = () => {
     }
 
     return (
-        <Row>
-            <Col md={3}>
+        <Row style={{margin: "0", padding: '0'}}>
+            <Col className='col-md-3 p-0'>
                 <CustomerInfo/>
             </Col>
-            <Col md={3}>
+            <Col className='col-md-3 p-0'>
                 <ShoppingCart/>
             </Col>
-            <Col md={6}>
+            <Col className='col-md-6 p-0'>
                 <CustomerGoods/>
             </Col>
         </Row>

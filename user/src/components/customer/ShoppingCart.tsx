@@ -1,24 +1,25 @@
 import React, {useContext} from 'react';
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
-import {buttonClasses} from "@mui/material";
 import {CustomerService} from "../../api/API";
-import {IHistory} from "../../types/customerTypes";
 
 const ShoppingCart = () => {
 
-    const {shoppingCartStore, customerStore} = useContext(Context);
+    const {shoppingCartStore, customerStore, historyStore} = useContext(Context);
 
     const clearHandler = () => {
         shoppingCartStore.clear();
     }
 
     const addItemToHistory = async () => {
-        await customerStore.addHistory({order: shoppingCartStore.shoppingCart});
+        await historyStore.addHistory({order: shoppingCartStore.shoppingCart}, customerStore.customer._id as string);
     }
 
     const addItemToCustomer = () => {
-        customerStore.customer.statistic.total += shoppingCartStore.amountOfItemsInCart;
+        shoppingCartStore.setAmountOfItemsInCart(shoppingCartStore.shoppingCart.reduce((acc, item) => {
+            return acc + (item?.amount * Number(item?.price))
+        }, 0));
+        customerStore.customer.statistic.total += shoppingCartStore.totalPrice;
         shoppingCartStore.shoppingCart.map((shoppingCartItem) => {
             const isInCart = customerStore.customer.statistic.orders.find(item => item.name === shoppingCartItem.name);
             if (isInCart) {
@@ -34,7 +35,7 @@ const ShoppingCart = () => {
             }]
         });
         shoppingCartStore.clear();
-        CustomerService.addOrders(customerStore.customer.statistic.orders, customerStore.history._id as string, customerStore.customer.statistic.total, customerStore.customer.phone)
+        CustomerService.addOrders(customerStore.customer.statistic.orders, historyStore.history._id as string, customerStore.customer.statistic.total, customerStore.customer.phone)
             .then((response) => {
                 customerStore.setCustomer(response.data)
             });

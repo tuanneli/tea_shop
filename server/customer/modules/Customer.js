@@ -8,9 +8,9 @@ const Customer = new Schema({
         orders: [{
             name: {type: String, ref: 'Item'},
             amount: {type: Number, default: 0},
-        }]
+        }],
     },
-    history: [{type: Schema.Types.ObjectId, ref: 'History'}]
+    history: [{type: Schema.Types.ObjectId, ref: 'History'}],
 });
 
 export default model('Customer', Customer);

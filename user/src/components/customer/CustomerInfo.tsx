@@ -9,7 +9,7 @@ const CustomerInfo = () => {
         <div>
             <div>Имя: {customerStore.customer?.name}</div>
             <div>Телефон: {customerStore.customer?.phone}</div>
-            <div>Всего заказов: {customerStore.customer?.statistic?.total}</div>
+            <div>Сумма всех покупок: {customerStore.customer?.statistic?.total} тг.</div>
             <div>
                 {customerStore.customer?.statistic?.orders.map((order) =>
                     <div key={order?.name}>

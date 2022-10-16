@@ -23,6 +23,7 @@
     "mongoose": "^6.6.5",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
+    "react-search-autocomplete": "^8.0.0",
     "uuid": "^9.0.0"
   }
 }

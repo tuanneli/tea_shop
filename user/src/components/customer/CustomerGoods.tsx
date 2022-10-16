@@ -1,6 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import Button from "react-bootstrap/Button";
+import CategoriesList from "./CategoriesList";
 
 const CustomerGoods = () => {
 
@@ -24,35 +26,23 @@ const CustomerGoods = () => {
     }
 
     return (
-        <div>
-            <div className="d-flex justify-content-center">
-                <div>
-                    <div className="bg-dark text-white workers-box">
-                        <div className="worker-row">
-                            <div className="worker-item justify-content-center">Название</div>
-                            <div className="worker-item justify-content-center">Цена</div>
-                            <div className="worker-item justify-content-center">Тип</div>
-                            <div className="worker-item justify-content-center">В наличии</div>
-                            <div className="worker-item justify-content-center">В акции</div>
-                            <div style={{border: "none", width: "75px", backgroundColor: "white"}}></div>
+        <div className='bg-dark customer-goods-container'>
+            <CategoriesList/>
+            <div className='braking-line'/>
+            <div className={"bg-dark customer-goods-box"}>
+                {goodsStore.goods.length !== 0 && goodsStore.goods.map(item => {
+                    if (item.category.name == goodsStore.categorySorted || goodsStore.categorySorted == "all") {
+                        return <div key={item.name} className="bg-dark text-white item-button-box">
+                            <button className="item-button button-style"
+                                    disabled={!item.inStock}
+                                    style={!item.inStock ? {backgroundColor: 'red'} : undefined}
+                                    onClick={() => addToShoppingCartHandler(item.name, item.price)}>
+                                <div className="item-button-item">{item.name}</div>
+                                <div className="item-button-item">{item.price} тг.</div>
+                            </button>
                         </div>
-                    </div>
-                    {goodsStore.goods.length !== 0 && goodsStore.goods.map(item => {
-                        if (item.category.name == goodsStore.categorySorted || goodsStore.categorySorted == "all") {
-                            return <div key={item.name} className="bg-dark text-white workers-box">
-                                <div className="worker-row">
-                                    <div className="worker-item">{item.name}</div>
-                                    <div className="worker-item">{item.price}</div>
-                                    <div className="worker-item">{item.category.name}</div>
-                                    <div className="worker-item">{item.inStock ? "Да" : "Нет"}</div>
-                                    <div className="worker-item">{item.inAction ? "Да" : "Нет"}</div>
-                                    <button onClick={() => addToShoppingCartHandler(item.name, item.price)}>Добавить
-                                    </button>
-                                </div>
-                            </div>
-                        }
-                    })}
-                </div>
+                    }
+                })}
             </div>
         </div>
     );

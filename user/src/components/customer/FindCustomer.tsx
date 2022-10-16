@@ -1,22 +1,31 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-
-import {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../login/Login.css";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import {CustomerService} from "../../api/API";
-import CustomerStore from "../../store/CustomerStore";
 import {Context} from "../../index";
 import {Link, useNavigate} from "react-router-dom";
-import {PersonAddAlt1} from "@mui/icons-material";
 import Error from "../error/Error";
 import {observer} from "mobx-react-lite";
+import './Customer.css';
+import {ListGroup, ListGroupItem} from "react-bootstrap";
+import {getTableBodyUtilityClass} from "@mui/material";
+
+type Item = {
+    id: number;
+    name: string;
+}
 
 function BasicExample() {
-    const [phone, setPhone] = useState<string>("");
+    const [phone, setPhone] = useState<string>("+7");
+    const [autoCompleteActive, setAutocompleteActive] = useState<boolean>(false);
     const {customerStore} = useContext(Context);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        customerStore.getCustomers();
+    }, [])
 
     const handleClick = async (e: any) => {
         e.preventDefault();
@@ -24,6 +33,33 @@ function BasicExample() {
         if (customer) {
             navigate('/customer');
         }
+    }
+
+    const phoneNumbers = customerStore.customers.map((customer) => customer.phone);
+
+    const filterPhoneNumbers = phoneNumbers.filter((phoneNumber) => {
+        return phoneNumber.includes(phone);
+    });
+
+    const handleClickOnAutocomplete = (phoneNumber: string) => {
+        setPhone(phoneNumber);
+        setAutocompleteActive(false);
+    };
+
+    const handleEnterOnAutocomplete = async (event: React.KeyboardEvent<HTMLElement>, phoneNumber: string) => {
+        if (event.key === "Enter") {
+            await setPhone(phoneNumber);
+            setAutocompleteActive(false);
+            const customer = await customerStore.getCustomer(phoneNumber);
+            if (customer) {
+                navigate('/customer');
+            }
+        }
+    };
+
+    const handleOnChangeInput = (e: any) => {
+        setPhone(String(e));
+        setAutocompleteActive(true);
     }
 
     return (
@@ -34,8 +70,23 @@ function BasicExample() {
                 <PhoneInput
                     placeholder="+7 (777) 123 4567"
                     value={phone}
-                    onChange={(e) => setPhone(String(e))}
+                    onChange={handleOnChangeInput}
+                    onClick={() => setAutocompleteActive(!autoCompleteActive)}
                 />
+                <ListGroup className={'autocomplete'}>
+                    {phone && autoCompleteActive
+                        ?
+                        filterPhoneNumbers.map((phoneNumber) => {
+                            return <ListGroup.Item key={phoneNumber}
+                                                   type={"submit"}
+                                                   tabIndex={0}
+                                                   onKeyDown={(event) => handleEnterOnAutocomplete(event, phoneNumber)}
+                                                   onClick={() => handleClickOnAutocomplete(phoneNumber)}
+                                                   className="autocomplete__item">{phoneNumber}</ListGroup.Item>
+                        })
+                        :
+                        null}
+                </ListGroup>
                 {customerStore.errorMessage && <Error error={customerStore.errorMessage}/>}
             </Form.Group>
             <Form.Group className="submit-or-enter mt-4">

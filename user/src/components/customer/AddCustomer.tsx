@@ -14,7 +14,7 @@ import {observer} from "mobx-react-lite";
 
 function BasicExample() {
     const [name, setName] = useState<string>("");
-    const [phone, setPhone] = useState<string>("");
+    const [phone, setPhone] = useState<string>("+7");
     const {customerStore} = useContext(Context);
     const navigate = useNavigate();
 

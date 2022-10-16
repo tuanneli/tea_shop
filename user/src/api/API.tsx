@@ -94,8 +94,8 @@ export class CustomerService {
         return $host.post<ICustomer>(`${baseURL}/customer/findone`, {phone});
     }
 
-    static async addHistory(history: IHistory): Promise<AxiosResponse<IHistory>> {
-        return $host.post<IHistory>(`${baseURL}/customer/addhistory`, {history});
+    static async addHistory(history: IHistory, customerId: string): Promise<AxiosResponse<IHistory>> {
+        return $host.post<IHistory>(`${baseURL}/customer/addhistory`, {history, customerId});
     }
 
     static async findCustomers(): Promise<AxiosResponse<ICustomer[]>> {

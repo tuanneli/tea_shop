@@ -8,10 +8,10 @@ export default class CustomerStore {
         makeAutoObservable(this);
     }
 
-    _history = {} as IHistory;
+    _customers = [] as ICustomer[];
 
-    get history() {
-        return this._history;
+    get customers() {
+        return this._customers;
     }
 
     _errorMessage = "";
@@ -32,8 +32,8 @@ export default class CustomerStore {
         return this._customer;
     }
 
-    setHistory(historyData: IHistory) {
-        this._history = historyData;
+    setCustomers(customersData: ICustomer[]) {
+        this._customers = customersData;
     }
 
     setErrorMessage(message: string) {
@@ -61,18 +61,6 @@ export default class CustomerStore {
         }
     }
 
-    async addHistory(history: IHistory) {
-        try {
-            const response = await CustomerService.addHistory(history);
-            this.setHistory(response.data);
-            this.setErrorMessage("");
-            return response.data;
-        } catch (e: any) {
-            console.log(e.response?.data?.message);
-            this.setErrorMessage(e.response?.data?.message);
-        }
-    }
-
     async getCustomer(phone: string) {
         try {
             const response = await CustomerService.findCustomer(phone);
@@ -89,6 +77,7 @@ export default class CustomerStore {
     async getCustomers() {
         try {
             const response = await CustomerService.findCustomers();
+            this.setCustomers(response.data);
             this.setErrorMessage("");
             return response.data;
         } catch (e: any) {

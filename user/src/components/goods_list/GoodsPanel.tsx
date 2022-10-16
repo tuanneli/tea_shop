@@ -6,7 +6,7 @@ import "./Goods.css";
 
 const GoodsPanel = () => {
     return (
-        <Row className="p-2">
+        <Row style={{margin: "0", padding: '0'}}>
             <Col md={3}>
                 <Categories/>
             </Col>

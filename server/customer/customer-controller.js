@@ -48,8 +48,8 @@ class CustomerController {
 
     async addHistory(req, res, next) {
         try {
-            const {history} = req.body;
-            const historyData = await CustomerService.addHistory(history);
+            const {history, customerId} = req.body;
+            const historyData = await CustomerService.addHistory(history, customerId);
             return res.status(200).json(historyData);
         } catch (e) {
             next(e);

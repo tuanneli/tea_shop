@@ -1,4 +1,5 @@
 export interface ICustomer {
+    _id?: string
     name: string
     phone: string
     statistic: {
@@ -21,6 +22,7 @@ export interface IShoppingCart {
 
 export interface IHistory {
     _id?: string,
+    customer?: string,
     order: IShoppingCart[],
     date?: string,
 }

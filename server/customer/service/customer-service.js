@@ -38,8 +38,8 @@ class CustomerService {
         return customer;
     }
 
-    async addHistory(history) {
-        const historyData = History.create({order: history.order});
+    async addHistory(history, customerId) {
+        const historyData = await History.create({customer: customerId, order: history.order});
         if (!historyData) {
             throw ApiError.badRequest('Ошибка при создании');
         }
