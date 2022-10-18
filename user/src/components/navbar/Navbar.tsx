@@ -33,9 +33,6 @@ const ColorSchemesExample = observer(() => {
                                                                                       to={'/findCustomer'}>Информация
                             о
                             песетителе &nbsp;{<PersonSearch/>}</Link> </Nav>
-                        {/*<Nav className={'navbar-item'}> <Link className="link-style" to={"/addclient"}>Добавить*/}
-                        {/*    постетителя &nbsp;{<PersonAddAlt1/>}</Link>*/}
-                        {/*</Nav>*/}
                         <Nav className={'navbar-item'}> <Link className="link-style" to={"/goodslist"}>Список
                             товаров &nbsp;{<EmojiFoodBeverage/>}</Link>
                         </Nav>
@@ -48,7 +45,7 @@ const ColorSchemesExample = observer(() => {
                         <Nav>
                             <Nav className='navbar-item border-start border-white'> <Link className="link-style"
                                                                                           to={"/register"}>{
-                                <AccountCircle/>} Регистрация </Link></Nav>
+                                <AccountCircle/>} Авторизация </Link></Nav>
                         </Nav>
                         :
                         <Nav className='navbar-item border-start border-white'>

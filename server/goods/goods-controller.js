@@ -1,8 +1,5 @@
-import Category from "./modules/Category.js";
 import CategoryService from "./service/CategoryService.js";
 import ItemService from "./service/ItemService.js";
-import Item from "./modules/Item.js";
-import ApiError from "../error/ApiError.js";
 
 class GoodsController {
     async addItem(req, res, next) {

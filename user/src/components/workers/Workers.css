@@ -1,3 +1,9 @@
+.workers-container {
+    background-color: #212529;
+    width: 100%;
+    min-height: 100vh;
+}
+
 .workers-box {
     padding: 5px;
     width: 500px
@@ -11,7 +17,6 @@
 .worker-item {
     padding: 5px;
     width: 250px;
-    border-right: 1px solid white;
     display: flex;
     align-items: center;
     word-break: break-all;

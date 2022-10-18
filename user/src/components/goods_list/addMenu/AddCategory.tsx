@@ -1,12 +1,11 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {memo, useContext, useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Dropdown, Form} from "react-bootstrap";
-import {Context} from "../../index";
-import {ICategory} from "../../types/goodsTypes";
+import {ICategory} from "../../../types/goodsTypes";
 import {observer} from "mobx-react-lite";
-import {GoodsService} from "../../api/API";
-import "./Goods.css";
+import {GoodsService} from "../../../api/API";
+import './AddMenu.css';
 
 interface IAddCategory {
     isNew: boolean,
@@ -50,20 +49,21 @@ const AddCategory = ({isNew, show, setShow, category}: IAddCategory) => {
     return (
         <>
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className='modal-header'>
                     <Modal.Title>{isNew ? "Добавить категорию" : "Изменить категорию"}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className='modal-body'>
                     <Form.Control value={name}
+                                  className={'modal-input-field'}
                                   onChange={(e) => setName(e.target.value)}
                                   placeholder={"Введите название товара"}/>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
+                <Modal.Footer className='modal-footer'>
+                    <Button variant="outline-light" onClick={handleClose}>
+                        Закрыть
                     </Button>
-                    <Button variant="primary" onClick={handleSave}>
-                        Save Changes
+                    <Button variant="outline-success" onClick={handleSave}>
+                        Сохранить
                     </Button>
                 </Modal.Footer>
             </Modal>

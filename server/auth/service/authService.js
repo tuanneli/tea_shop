@@ -1,4 +1,3 @@
-import {validationResult} from "express-validator";
 import User from "../modules/User.js";
 import Role from "../modules/Role.js";
 import * as uuid from 'uuid';

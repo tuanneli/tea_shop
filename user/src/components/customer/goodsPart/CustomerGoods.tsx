@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Context} from "../../index";
+import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
-import Button from "react-bootstrap/Button";
 import CategoriesList from "./CategoriesList";
+import "./CustomerGoods.css";
+import "../Customer.css";
 
 const CustomerGoods = () => {
 
@@ -35,10 +36,10 @@ const CustomerGoods = () => {
                         return <div key={item.name} className="bg-dark text-white item-button-box">
                             <button className="item-button button-style"
                                     disabled={!item.inStock}
-                                    style={!item.inStock ? {backgroundColor: 'red'} : undefined}
+                                    style={!item.inStock ? {backgroundColor: '#704040'} : undefined}
                                     onClick={() => addToShoppingCartHandler(item.name, item.price)}>
                                 <div className="item-button-item">{item.name}</div>
-                                <div className="item-button-item">{item.price} тг.</div>
+                                <div className="item-button-item">{item.price} ₸</div>
                             </button>
                         </div>
                     }

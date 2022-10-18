@@ -1,0 +1,31 @@
+.autocomplete {
+    position: absolute;
+    opacity: 0.9;
+    margin-left: 42px;
+    padding: 0;
+    width: 260px;
+    border-radius: 5px;
+    background-color: white;
+    list-style: none;
+    color: black;
+    box-shadow: 1px 1px 5px black;
+    max-height: 240px;
+    height: auto;
+    overflow: auto;
+}
+
+.autocomplete__item {
+    padding: 5px 10px;
+}
+
+.autocomplete__item:hover {
+    background-color: #dedede;
+    cursor: pointer;
+    transition: cubic-bezier(1, 0, 0, 1) .1s all;
+}
+
+.autocomplete__item:focus {
+    background-color: #dedede;
+    cursor: pointer;
+    transition: cubic-bezier(1, 0, 0, 1) .1s all;
+}

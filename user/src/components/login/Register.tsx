@@ -3,10 +3,11 @@ import Form from 'react-bootstrap/Form';
 import './Login.css';
 import {Link, useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
-import Error from "../error/Error";
+import Error from "../../common/Error";
 import {useAuthValidation} from "../../hooks/validationHooks";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
+import bcrypt from 'bcryptjs';
 
 function BasicExample() {
     const [email, setEmail] = useState<string>("");
@@ -55,8 +56,7 @@ function BasicExample() {
                 <Form.Control value={passwordSecond} onChange={(e) => setSecondPassword(e.target.value)} type="password"
                               placeholder="Повторите пароль"/>
             </Form.Group>
-            <Form.Group className="mb-5" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Запомнить меня"/>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 {error && <Error error={error}/>}
             </Form.Group>
             <Form.Group className="submit-or-enter">

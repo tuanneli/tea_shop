@@ -1,10 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Context} from "../../index";
-import {ListGroup} from "react-bootstrap";
+import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
-import {GoodsService} from "../../api/API";
-import {ICategory} from "../../types/goodsTypes";
-import '../../styles/Scrollbar.css'
+import '../../../styles/Scrollbar.css';
+import "./CustomerGoods.css";
+import "../Customer.css";
 
 const CategoriesList = () => {
 
@@ -25,7 +24,7 @@ const CategoriesList = () => {
     }, [isActive])
 
     return (
-        <div className='categories-container'>
+        <div className='customer-categories-container'>
             <div className="category-row">
                 <div
                     className="category-row-item button-style"

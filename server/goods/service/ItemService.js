@@ -13,9 +13,6 @@ class ItemService {
         if (!categoryData) {
             throw ApiError.badRequest('Такой категории не существует');
         }
-        console.log(category)
-        console.log(categoryData)
-        console.log(categoryData._id)
         return await Item.create({name, price, inStock, inAction, category: categoryData._id});
     }
 

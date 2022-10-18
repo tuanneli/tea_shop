@@ -1,0 +1,12 @@
+.modal-header,
+.modal-body,
+.modal-footer {
+    color: white !important;
+    background-color: #212529 !important;
+    border: none !important;
+    padding-bottom: 15px !important;
+}
+
+.modal-input-field {
+    box-shadow: none !important;
+}

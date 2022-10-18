@@ -1,7 +1,9 @@
 import React, {useContext} from 'react';
-import {Context} from "../../index";
+import {Context} from "../../../index";
 import {observer} from "mobx-react-lite";
-import {CustomerService} from "../../api/API";
+import {CustomerService} from "../../../api/API";
+import "../Customer.css";
+import "./ShoppingCart.css";
 
 const ShoppingCart = () => {
 
@@ -16,9 +18,6 @@ const ShoppingCart = () => {
     }
 
     const addItemToCustomer = () => {
-        shoppingCartStore.setAmountOfItemsInCart(shoppingCartStore.shoppingCart.reduce((acc, item) => {
-            return acc + (item?.amount * Number(item?.price))
-        }, 0));
         customerStore.customer.statistic.total += shoppingCartStore.totalPrice;
         shoppingCartStore.shoppingCart.map((shoppingCartItem) => {
             const isInCart = customerStore.customer.statistic.orders.find(item => item.name === shoppingCartItem.name);
@@ -47,23 +46,34 @@ const ShoppingCart = () => {
     }
 
     return (
-        <div>
+        <div className='bg-dark shopping-cart-container'>
+            <div className={'total-box row'}>
+                <div className='col-md-4'>Всего: {shoppingCartStore.totalPrice} ₸
+                </div>
+                <div className='col-md-8 clear-add-box'>
+                    <button className='button-style clear-button' onClick={clearHandler}>Очистить</button>
+                    <button className='button-style add-button' onClick={addItem}>Добавить</button>
+                </div>
+            </div>
             {shoppingCartStore.shoppingCart.map((item) =>
-                <div key={item.name} className="d-flex">
-                    <button onClick={() => shoppingCartStore.removeItemFromShoppingCart(item?.name)}>-</button>
-                    <div className='ps-1'>{item?.name}</div>
-                    <div className='ps-1'>{item?.price}</div>
-                    <div className='ps-1'>{item?.amount}</div>
-                    <button onClick={() => shoppingCartStore.addItemToShoppingCart(item?.name, item?.price)}>+</button>
-                    <div>Стоимость: {item?.amount * Number(item?.price)} тг.</div>
+                <div key={item.name} className="shopping-cart-item">
+                    <div className='col-md-7'>
+                        <div>{item?.name}</div>
+                        <div>{item?.amount * Number(item?.price)} ₸</div>
+                    </div>
+                    <div className='col-md-5 more-less-box'>
+                        <button className='button-style button-item'
+                                onClick={() => shoppingCartStore.removeItemFromShoppingCart(item?.name, item?.price)}>
+                            <div className={'button-text'}>-</div>
+                        </button>
+                        <div className='amount-item'>{item?.amount}</div>
+                        <button className='button-style button-item'
+                                onClick={() => shoppingCartStore.addItemToShoppingCart(item?.name, item?.price)}>
+                            <div className={'button-text'}>+</div>
+                        </button>
+                    </div>
                 </div>
             )}
-            <div>Всего: {shoppingCartStore.shoppingCart.reduce((acc, item) => {
-                return acc + (item?.amount * Number(item?.price))
-            }, 0)} тг.
-            </div>
-            <button onClick={clearHandler}>Очистить</button>
-            <button onClick={addItem}>Добавить</button>
         </div>
     );
 };

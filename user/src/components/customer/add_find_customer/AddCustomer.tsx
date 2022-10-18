@@ -2,14 +2,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import {useContext, useState} from "react";
-import "../login/Login.css";
+import "../../login/Login.css";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import {CustomerService} from "../../api/API";
-import {Context} from "../../index";
-import {ICustomer} from "../../types/customerTypes";
+import {CustomerService} from "../../../api/API";
+import {Context} from "../../../index";
+import {ICustomer} from "../../../types/customerTypes";
 import {Link, useNavigate} from "react-router-dom";
-import Error from "../error/Error";
+import Error from "../../../common/Error";
 import {observer} from "mobx-react-lite";
 
 function BasicExample() {

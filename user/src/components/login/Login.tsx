@@ -4,9 +4,10 @@ import './Login.css';
 import {useContext, useState} from "react";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
-import Error from "../error/Error";
+import Error from "../../common/Error";
 import {useAuthValidation} from "../../hooks/validationHooks";
 import {Link, useNavigate} from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 const BasicExample = observer(() => {
 
@@ -45,7 +46,6 @@ const BasicExample = observer(() => {
                               placeholder="Введите пароль"/>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Запомнить меня"/>
                 {error && <Error error={error}/>}
             </Form.Group>
             <Form.Group className="submit-or-enter">
