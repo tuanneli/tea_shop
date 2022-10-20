@@ -4,6 +4,7 @@ export interface IItem {
     price: string,
     inStock?: boolean,
     inAction?: boolean,
+    amountToAction: string,
     category: ICategory,
 }
 
@@ -13,6 +14,7 @@ export interface ICreateItem {
     price: string,
     inStock?: boolean,
     inAction?: boolean,
+    amountToAction?: string,
     category: string,
 }
 

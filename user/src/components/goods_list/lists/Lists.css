@@ -2,6 +2,9 @@
     user-select: none;
 }
 
+:root {
+    --active-part: #1a1d21;
+}
 
 .goods-container,
 .categories-container {
@@ -9,8 +12,13 @@
     background-color: #212529 !important;
     padding: 5px !important;
     border-radius: 0 !important;
-    min-height: 100vh !important;
     height: 100%;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.goods-container {
+    min-height: 100vh !important;
 }
 
 .goods-label,
@@ -28,24 +36,26 @@
 .category-goods-row {
     width: 100%;
     padding-left: 13px;
+    overflow: hidden;
 }
 
 .category-group-item,
 .goods-item {
     border: 1px solid white;
     padding: 8px 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
 .category-group-item {
-    width: 50% !important;
-    background-color: #212529 !important;
+    background-color: var(--active-part) !important;
     word-break: break-all !important;
-    color: white !important;
     border: 1px solid white !important;
 }
 
 .add-new-button {
-    background-color: #212529;
+    background-color: var(--active-part);
     border: 1px solid white;
     width: 50%;
     color: #0af500;
@@ -53,17 +63,15 @@
 }
 
 .change-button {
-    background-color: #212529;
+    background-color: var(--active-part);
     border: 1px solid white;
-    width: 25%;
     color: blue;
     transition: .3s ease-out;
 }
 
 .remove-button {
-    background-color: #212529;
+    background-color: var(--active-part);
     border: 1px solid white;
-    width: 25%;
     color: red;
     transition: .3s ease-out;
 }

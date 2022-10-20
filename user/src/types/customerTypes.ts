@@ -12,6 +12,7 @@ export interface ICustomer {
 export interface IOrders {
     name: string
     amount: number
+    amountToAction?: string
 }
 
 export interface IShoppingCart {

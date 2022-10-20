@@ -26,7 +26,15 @@
 }
 
 .customer-info-name,
-.customer-info-price {
-    width: 50%;
+.customer-info-price,
+.customer-info-action {
+    width: 33%;
     margin-right: 5px;
+}
+
+.customer-info-price,
+.customer-info-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

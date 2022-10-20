@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
-import {ICustomer, IHistory} from "../types/customerTypes";
+import {ICustomer, IHistory, IOrders} from "../types/customerTypes";
 import {CustomerService, GoodsService} from "../api/API";
+import {IItem} from "../types/goodsTypes";
 
 export default class CustomerStore {
 
@@ -30,6 +31,16 @@ export default class CustomerStore {
 
     get customer() {
         return this._customer;
+    }
+
+    changeCustomerOrders(goods: IItem[]) {
+        this.customer.statistic.orders.map((order) => {
+            goods?.map((item) => {
+                if (order?.name === item?.name) {
+                    order.amountToAction = item.amountToAction;
+                }
+            })
+        })
     }
 
     setCustomers(customersData: ICustomer[]) {

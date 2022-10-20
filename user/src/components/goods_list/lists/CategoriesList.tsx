@@ -74,7 +74,7 @@ const CategoriesList = () => {
     return (
         <div className={'categories-container'}>
             <div className="category-goods-row row">
-                <div className={'categories-label col-md-12'}>
+                <div className={'categories-label col-12'}>
                     {error ?
                         <div className="text-center"><Error error={error}/>
                         </div> : "КАТЕГОРИИ"}
@@ -82,25 +82,28 @@ const CategoriesList = () => {
             </div>
             <div className="category-goods-row row">
                 <div
-                    className="category-group-item col-md-6"
+                    className="category-group-item col-4"
+                    style={{color: goodsStore.categorySorted === 'all' ? 'wheat' : 'white'}}
                     onClick={() => goodsStore.setCategorySorted("all")}
                     key={"All"}>
                     Все
                 </div>
-                <button className={"add-new-button col-md-6 px-1"} onClick={handleAdd}>Добавить
+                <button className={"add-new-button col-8 px-1"} onClick={handleAdd}>Добавить
                     категорию
                 </button>
             </div>
             {goodsStore.categories.map(category =>
                 <div className="category-goods-row row" key={category.name}>
                     <div
-                        className="category-group-item col-md-6"
+                        className="category-group-item col-4"
+                        style={{color: goodsStore.categorySorted === category.name ? 'wheat' : 'white'}}
                         onClick={() => goodsStore.setCategorySorted(category.name)}>
                         {category.name}
                     </div>
-                    <button className={"remove-button col-md-3"} onClick={() => handleDelete(category.name)}>Удалить
+                    <button className={"remove-button col-4"}
+                            onClick={() => handleDelete(category.name)}>Удалить
                     </button>
-                    <button className={"change-button col-md-3"} onClick={() => handleChange(category)}>Изменить
+                    <button className={"change-button col-4"} onClick={() => handleChange(category)}>Изменить
                     </button>
                 </div>
             )}

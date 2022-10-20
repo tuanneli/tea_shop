@@ -16,9 +16,9 @@ const Autocomplete = memo(({phone, setPhone, autoCompleteActive, setAutocomplete
     const navigate = useNavigate();
     const {customerStore} = useContext(Context);
 
-    const phoneNumbers = useMemo(() => customerStore.customers.map((customer) => {
+    const phoneNumbers = customerStore.customers.map((customer) => {
         return customer.phone
-    }), [])
+    })
 
     const filterPhoneNumbers = phoneNumbers.filter((phoneNumber) => {
         return phoneNumber.includes(phone);

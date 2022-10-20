@@ -18,12 +18,12 @@ interface IAddItem {
 const AddItem = ({newItem, show, setShow, item}: IAddItem) => {
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
     const [name, setName] = useState<string>("");
     const [price, setPrice] = useState<string>("");
     const [category, setCategory] = useState<string>("");
     const [inAction, setInAction] = useState<boolean>(false);
     const [inStock, setInStock] = useState<boolean>(false);
+    const [amountToAction, setAmountToAction] = useState<string>("");
     const {goodsStore} = useContext(Context);
 
     useEffect(() => {
@@ -33,27 +33,47 @@ const AddItem = ({newItem, show, setShow, item}: IAddItem) => {
             setPrice("");
             setCategory("");
             setInAction(false);
+            setAmountToAction("");
             setInStock(false);
         }
+    }, [show])
+
+    useEffect(() => {
         if (item) {
             setInAction(item?.inAction as boolean);
             setInStock(item?.inStock as boolean);
             setName(item?.name);
             setPrice(item?.price);
+            setAmountToAction(item?.amountToAction);
             setCategory(item?.category?.name);
         }
-    }, [show, item])
+    }, [item])
+
+    useEffect(() => {
+        console.log('here we are ')
+        if (!inAction) {
+            setAmountToAction("");
+        }
+    }, [inAction])
 
     const handleSave = async () => {
         if (newItem) {
             try {
-                await GoodsService.createItem({name, price, inStock, inAction, category});
+                await GoodsService.createItem({name, price, inStock, inAction, amountToAction, category});
             } catch (e) {
                 console.log(e)
             }
         } else {
             try {
-                await GoodsService.changeItem({_id: item?._id, name, price, inStock, inAction, category});
+                await GoodsService.changeItem({
+                    _id: item?._id,
+                    name,
+                    price,
+                    inStock,
+                    inAction,
+                    amountToAction,
+                    category
+                });
             } catch (e) {
                 console.log(e)
             }
@@ -118,6 +138,17 @@ const AddItem = ({newItem, show, setShow, item}: IAddItem) => {
                             <label className="form-check-label" htmlFor="flexSwitchCheckChecked">Учавствует в
                                 акции</label>
                         </div>
+                        {inAction &&
+                            <div>
+                                <div className="add-menu-inAction-label">Введите колличество товара после которого будет
+                                    бесплатный
+                                </div>
+                                <Form.Control value={amountToAction}
+                                              type={"number"}
+                                              className='modal-input-field add-dropdown-menu-item my-3'
+                                              onChange={(e) => setAmountToAction(e.target.value)}
+                                              placeholder={""}/>
+                            </div>}
                     </Dropdown>
                 </Modal.Body>
                 <Modal.Footer className='modal-footer'>

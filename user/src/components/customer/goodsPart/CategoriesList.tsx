@@ -28,6 +28,7 @@ const CategoriesList = () => {
             <div className="category-row">
                 <div
                     className="category-row-item button-style"
+                    style={{color: goodsStore.categorySorted === "all" ? 'wheat' : 'white'}}
                     onClick={() => goodsStore.setCategorySorted("all")}
                     key={"All"}>
                     Все
@@ -36,6 +37,7 @@ const CategoriesList = () => {
             {goodsStore.categories.map(category =>
                 <div className="category-row" key={category.name}>
                     <div
+                        style={{color: goodsStore.categorySorted === category.name ? 'wheat' : 'white'}}
                         className="category-row-item button-style"
                         onClick={() => goodsStore.setCategorySorted(category.name)}>
                         {category.name}

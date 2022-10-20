@@ -4,7 +4,7 @@ import Category from "../modules/Category.js";
 
 
 class ItemService {
-    async addItem(name, price, inStock, inAction, category) {
+    async addItem(name, price, inStock, inAction, amountToAction, category) {
         const candidate = await Item.findOne({name});
         if (candidate) {
             throw ApiError.badRequest('Такой товар уже существует');
@@ -13,10 +13,10 @@ class ItemService {
         if (!categoryData) {
             throw ApiError.badRequest('Такой категории не существует');
         }
-        return await Item.create({name, price, inStock, inAction, category: categoryData._id});
+        return await Item.create({name, price, inStock, inAction, amountToAction, category: categoryData._id});
     }
 
-    async changeItem(_id, name, price, inStock, inAction, category) {
+    async changeItem(_id, name, price, inStock, inAction, amountToAction, category) {
         const candidate = await Item.findById(_id);
         if (!candidate) {
             throw ApiError.badRequest('Такого товара не существует');
@@ -30,6 +30,7 @@ class ItemService {
             price: price,
             inStock: inStock,
             inAction: inAction,
+            amountToAction: amountToAction,
             category: categoryData._id
         });
     }

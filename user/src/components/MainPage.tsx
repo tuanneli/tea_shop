@@ -2,11 +2,9 @@ import React, {useContext, useEffect} from 'react';
 import Navbar from "./navbar/Navbar";
 import {Route, Routes} from "react-router-dom";
 import Login from "./login/Login";
-import Home from "./home/Home";
 import AddClient from "./customer/add_find_customer/AddCustomer";
 import FindCustomer from "./customer/add_find_customer/findCustomer/FindCustomer";
 import Register from "./login/Register";
-import GoodsList from "./goods_list/lists/GoodsList";
 import Workers from "./workers/Workers";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
@@ -50,7 +48,7 @@ const MainPage = observer(() => {
                     <Route path={'/goodslist'} element={<GoodsPanel/>}/>
                     <Route path={'/workers'} element={<Workers/>}/>
                     <Route path={'/customer'} element={<CustomerPage/>}/>
-                    <Route path={'/*'} element={<Home/>}/>
+                    <Route path={'/*'} element={<FindCustomer/>}/>
                 </Routes>
             </>
             {/*}*/}

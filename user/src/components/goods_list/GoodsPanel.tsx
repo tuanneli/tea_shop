@@ -6,11 +6,11 @@ import "./Goods.css";
 
 const GoodsPanel = () => {
     return (
-        <Row style={{margin: "0", padding: '0'}}>
-            <Col md={3} style={{margin: "0", padding: '0'}}>
+        <Row style={{margin: "0", padding: '0'}} className={'bg-dark goods__panel'}>
+            <Col lg={3} md={4} style={{margin: "0", padding: '0'}}>
                 <Categories/>
             </Col>
-            <Col md={9} style={{margin: "0", padding: '0'}}>
+            <Col lg={9} md={8} style={{margin: "0", padding: '0'}}>
                 <GoodsList/>
             </Col>
         </Row>

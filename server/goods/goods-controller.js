@@ -4,8 +4,8 @@ import ItemService from "./service/ItemService.js";
 class GoodsController {
     async addItem(req, res, next) {
         try {
-            const {name, price, inStock, inAction, category} = req.body;
-            const item = await ItemService.addItem(name, price, inStock, inAction, category);
+            const {name, price, inStock, inAction, amountToAction, category} = req.body;
+            const item = await ItemService.addItem(name, price, inStock, inAction, amountToAction, category);
             return res.status(200).json(item);
         } catch (e) {
             next(e);
@@ -14,8 +14,8 @@ class GoodsController {
 
     async changeItem(req, res, next) {
         try {
-            const {_id, name, price, inStock, inAction, category} = req.body;
-            const item = await ItemService.changeItem(_id, name, price, inStock, inAction, category);
+            const {_id, name, price, inStock, inAction, amountToAction, category} = req.body;
+            const item = await ItemService.changeItem(_id, name, price, inStock, inAction, amountToAction, category);
             return res.status(200).json(item);
         } catch (e) {
             next(e);

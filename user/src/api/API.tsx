@@ -33,8 +33,22 @@ export class UsersService {
 }
 
 export class GoodsService {
-    static async createItem({name, price, inStock, inAction, category}: ICreateItem): Promise<AxiosResponse<IItem>> {
-        return $host.post<IItem>(`${baseURL}/goods/additem`, {name, price, inStock, inAction, category});
+    static async createItem({
+                                name,
+                                price,
+                                inStock,
+                                inAction,
+                                amountToAction,
+                                category
+                            }: ICreateItem): Promise<AxiosResponse<IItem>> {
+        return $host.post<IItem>(`${baseURL}/goods/additem`, {
+            name,
+            price,
+            inStock,
+            inAction,
+            amountToAction,
+            category
+        });
     }
 
     static async getItems(): Promise<AxiosResponse<IItem[]>> {
@@ -59,9 +73,18 @@ export class GoodsService {
                                 price,
                                 inStock,
                                 inAction,
+                                amountToAction,
                                 category
                             }: ICreateItem): Promise<AxiosResponse<IItem>> {
-        return $host.put<IItem>(`${baseURL}/goods/changeitem`, {_id, name, price, inStock, inAction, category});
+        return $host.put<IItem>(`${baseURL}/goods/changeitem`, {
+            _id,
+            name,
+            price,
+            inStock,
+            inAction,
+            amountToAction,
+            category
+        });
     }
 
     static async getCategories(): Promise<AxiosResponse<ICategory[]>> {
