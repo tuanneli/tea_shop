@@ -3,25 +3,24 @@ import Role from "../modules/Role.js";
 import * as uuid from 'uuid';
 import UserDto from "../../dto/userDto.js";
 import TokenService from "./tokenService.js";
-import MailService from "./mail-service.js";
-import bcrypt from "bcryptjs";
 import tokenService from "./tokenService.js";
+import bcrypt from "bcryptjs";
 import ApiError from "../../error/ApiError.js";
 
 class AuthService {
-    async registration(email, name, password) {
+    async registration(email, name, password, role) {
         const candidate = await User.findOne({email});
         if (candidate) {
             throw ApiError.badRequest('Пользователь уже зарегестрирован');
         }
         const hashPassword = bcrypt.hashSync(password, 5);
         const activationLink = uuid.v4();
-        const userRole = await Role.findOne({value: "USER"});
+        const userRole = await Role.findOne({value: role});
         const user = await User.create({email, name, password: hashPassword, roles: [userRole.value], activationLink});
         const userDto = new UserDto(user);
-        await MailService.sendActivationLink(userDto, `${process.env.API_URL}/auth/activate/${activationLink}`);
+        // await MailService.sendActivationLink(userDto, `${process.env.API_URL}/auth/activate/${activationLink}`);
         const tokens = TokenService.generateTokens({userDto});
-        await TokenService.saveToken(userDto.id, tokens.refreshToken);
+        await TokenService.saveToken(userDto._id, tokens.refreshToken);
         return {
             user: userDto,
             ...tokens
@@ -39,7 +38,7 @@ class AuthService {
         }
         const userDto = new UserDto(user);
         const tokens = TokenService.generateTokens({userDto});
-        await TokenService.saveToken(userDto.id, tokens.refreshToken);
+        await TokenService.saveToken(userDto._id, tokens.refreshToken);
         return {
             user: userDto,
             ...tokens
@@ -76,10 +75,10 @@ class AuthService {
         if (!userData || !token) {
             throw ApiError.authorizationFailure();
         }
-        const user = await User.findById(userData.userDto.id);
+        const user = await User.findById(userData.userDto._id);
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({userDto});
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        await tokenService.saveToken(userDto._id, tokens.refreshToken);
         return {
             ...tokens,
             user: userDto

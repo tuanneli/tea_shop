@@ -5,8 +5,15 @@ import {baseURL} from "../http/http";
 import {IResponse, IUser} from "../types/authTypes";
 
 export default class UserStore {
+
     constructor() {
         makeAutoObservable(this)
+    }
+
+    _userRoleForRegistration = 'USER';
+
+    get userRoleForRegistration() {
+        return this._userRoleForRegistration;
     }
 
     _isAuth = false;
@@ -27,6 +34,10 @@ export default class UserStore {
         return this._isLoading;
     }
 
+    setUserRoleForRegistration(role: string) {
+        this._userRoleForRegistration = role;
+    }
+
     setIsAuth(bool: boolean) {
         this._isAuth = bool;
     }
@@ -39,12 +50,14 @@ export default class UserStore {
         this._isLoading = bool;
     }
 
-    async registration(email: string, name: string, password: string) {
+    async registration(email: string, name: string, password: string, role: string) {
         try {
-            const response = await AuthService.register(email, name, password);
-            localStorage.setItem('token', response.data.accessToken);
-            this.setIsAuth(true);
-            this.setUser(response.data.user);
+            const response = await AuthService.register(email, name, password, role);
+            if (this._userRoleForRegistration !== 'ADMIN') {
+                localStorage.setItem('token', response.data.accessToken);
+                this.setIsAuth(true);
+                this.setUser(response.data.user);
+            }
         } catch (e: any) {
             console.log(e.response?.data?.message);
             return e.response?.data?.message;
@@ -57,10 +70,9 @@ export default class UserStore {
             localStorage.setItem('token', response.data.accessToken);
             this.setIsAuth(true);
             this.setUser(response.data.user);
-            console.log(response);
         } catch (e: any) {
             console.log('error')
-            console.log(e.response?.data?.message);
+            console.log(e.response?.data);
             return e.response?.data?.message;
         }
     }

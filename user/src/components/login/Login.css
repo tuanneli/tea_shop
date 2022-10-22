@@ -1,6 +1,16 @@
+.login__form,
+.register__form {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form-box {
     width: 400px;
-    margin: 25px auto auto;
+    margin: 0 !important;
+    padding: 0 !important;
     border-radius: 15px;
 }
 

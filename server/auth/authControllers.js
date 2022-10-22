@@ -1,8 +1,4 @@
-import Role from "./modules/Role.js";
-import User from "./modules/User.js";
-import bcrypt from "bcryptjs";
-import {cookie, validationResult} from "express-validator";
-import jwt from "jsonwebtoken";
+import {validationResult} from "express-validator";
 import * as dotenv from "dotenv";
 import AuthService from "./service/authService.js";
 import ApiError from "../error/ApiError.js";
@@ -17,8 +13,8 @@ class AuthControllers {
             if (!errors.isEmpty()) {
                 next(ApiError.badRequest('Ошибка валидации', errors.array()));
             }
-            const {email, name, password} = req.body;
-            const user = await AuthService.registration(email, name, password);
+            const {email, name, password, role} = req.body;
+            const user = await AuthService.registration(email, name, password, role);
             res.cookie('refreshToken', user.refreshToken, {
                 maxAge: 60 * 24 * 60 * 60 * 1000,
                 httpOnly: true,

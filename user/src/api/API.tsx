@@ -1,12 +1,12 @@
-import axios, {AxiosError, AxiosResponse} from "axios";
+import {AxiosResponse} from "axios";
 import {$host, baseURL} from "../http/http";
-import {IResponse, IUser} from "../types/authTypes";
+import {IActivate, IResponse, IUser} from "../types/authTypes";
 import {ICategory, ICreateItem, IItem} from "../types/goodsTypes";
 import {ICustomer, IHistory, IOrders} from "../types/customerTypes";
 
 export class AuthService {
-    static async register(email: string, name: string, password: string): Promise<AxiosResponse<IResponse>> {
-        return $host.post<IResponse>(`${baseURL}/auth/registration`, {email, name, password});
+    static async register(email: string, name: string, password: string, role: string): Promise<AxiosResponse<IResponse>> {
+        return $host.post<IResponse>(`${baseURL}/auth/registration`, {email, name, password, role});
     }
 
     static async login(email: string, password: string): Promise<AxiosResponse<IResponse>> {
@@ -15,6 +15,10 @@ export class AuthService {
 
     static async logout(): Promise<void> {
         return $host.post(`${baseURL}/auth/logout`);
+    }
+
+    static async activate(activationLink: string): Promise<AxiosResponse<IActivate>> {
+        return $host.get(`${baseURL}/auth/activate/${activationLink}`);
     }
 }
 

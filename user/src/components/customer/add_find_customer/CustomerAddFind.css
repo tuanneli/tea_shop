@@ -1,3 +1,12 @@
+.find_customer__form,
+.add_customer__form {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .autocomplete {
     position: absolute;
     opacity: 0.9;
@@ -12,6 +21,14 @@
     max-height: 240px;
     height: auto;
     overflow: auto;
+}
+
+.phone_input {
+    flex: 1 1 !important;
+    min-width: 0 !important;
+    height: 40px !important;
+    border-radius: 7px !important;
+    padding-left: 10px !important;
 }
 
 .autocomplete__item {

@@ -1,6 +1,6 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import React, {useContext, useEffect, useMemo, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../../../login/Login.css";
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
@@ -35,7 +35,7 @@ function BasicExample() {
     }
 
     return (
-        <div>
+        <div className={'find_customer__form'}>
             <Form className="p-5 form-box bg-dark text-white">
                 <h4 className="box-label">Найти посетителя</h4>
                 <Form.Group className="mb-3 form-item-box" controlId="formBasicPassword">
@@ -43,6 +43,7 @@ function BasicExample() {
                     <PhoneInput
                         placeholder="+7 (777) 123 4567"
                         value={phone}
+                        className={'phone__input'}
                         onChange={handleOnChangeInput}
                         onClick={() => setAutocompleteActive(!autoCompleteActive)}
                     />
