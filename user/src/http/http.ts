@@ -1,8 +1,8 @@
-import axios, {AxiosResponse} from 'axios';
+import axios from 'axios';
 import {IResponse} from "../types/authTypes";
 
-export const baseURL = 'http://localhost:5000';
-// export const baseURL = 'https://stark-beach-37831.herokuapp.com';
+// export const baseURL = 'http://localhost:5000';
+export const baseURL = 'https://stark-beach-37831.herokuapp.com';
 
 const $host = axios.create({
     withCredentials: true,
