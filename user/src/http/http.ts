@@ -11,6 +11,7 @@ const $host = axios.create({
 
 $host.interceptors.request.use((config: any) => {
     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
+    console.log(config.headers.authorization);
     return config;
 });
 
