@@ -16,7 +16,6 @@ $host.interceptors.request.use((config: any) => {
 });
 
 $host.interceptors.response.use((config: any) => {
-    config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
     return config;
 }, (async (error) => {
     const originRequest = error.config;
