@@ -48,40 +48,40 @@ const MainPage = observer(() => {
 
     return (
         <>
-            {!userStore.isAuth ?
-                <>
+            {/*{!userStore.isAuth ?*/}
+            {/*    <>*/}
+            {/*        <Routes>*/}
+            {/*            <Route path={'/login'} element={<Login/>}/>*/}
+            {/*            <Route path={'/register'} element={<Register/>}/>*/}
+            {/*            <Route path={'/*'} element={<Login/>}/>*/}
+            {/*        </Routes>*/}
+            {/*    </>*/}
+            {/*    :*/}
+            <>
+                <Navbar/>
+                {userStore.user.roles && userStore.user.roles[0] === 'ADMIN' ?
                     <Routes>
-                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/findCustomer'} element={<FindCustomer/>}/>
                         <Route path={'/register'} element={<Register/>}/>
-                        <Route path={'/*'} element={<Login/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/addclient'} element={<AddClient/>}/>
+                        <Route path={'/goodslist'} element={<GoodsPanel/>}/>
+                        <Route path={'/workers'} element={<Workers/>}/>
+                        <Route path={'/customer'} element={<CustomerPage/>}/>
+                        <Route path={'/*'} element={<FindCustomer/>}/>
                     </Routes>
-                </>
-                :
-                <>
-                    <Navbar/>
-                    {userStore.user.roles && userStore.user.roles[0] === 'ADMIN' ?
-                        <Routes>
-                            <Route path={'/findCustomer'} element={<FindCustomer/>}/>
-                            <Route path={'/register'} element={<Register/>}/>
-                            <Route path={'/login'} element={<Login/>}/>
-                            <Route path={'/addclient'} element={<AddClient/>}/>
-                            <Route path={'/goodslist'} element={<GoodsPanel/>}/>
-                            <Route path={'/workers'} element={<Workers/>}/>
-                            <Route path={'/customer'} element={<CustomerPage/>}/>
-                            <Route path={'/*'} element={<FindCustomer/>}/>
-                        </Routes>
-                        :
-                        <Routes>
-                            <Route path={'/findCustomer'} element={<FindCustomer/>}/>
-                            <Route path={'/register'} element={<Register/>}/>
-                            <Route path={'/login'} element={<Login/>}/>
-                            <Route path={'/addclient'} element={<AddClient/>}/>
-                            <Route path={'/customer'} element={<CustomerPage/>}/>
-                            <Route path={'/*'} element={<FindCustomer/>}/>
-                        </Routes>
-                    }
-                </>
-            }
+                    :
+                    <Routes>
+                        <Route path={'/findCustomer'} element={<FindCustomer/>}/>
+                        <Route path={'/register'} element={<Register/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/addclient'} element={<AddClient/>}/>
+                        <Route path={'/customer'} element={<CustomerPage/>}/>
+                        <Route path={'/*'} element={<FindCustomer/>}/>
+                    </Routes>
+                }
+            </>
+            {/*}*/}
         </>
     );
 });

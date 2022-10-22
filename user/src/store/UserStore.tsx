@@ -92,15 +92,12 @@ export default class UserStore {
 
     async checkAuth() {
         try {
-            this.setIsLoading(true);
             const response = await axios.get<IResponse>(`${baseURL}/auth/refresh`, {withCredentials: true});
             localStorage.setItem('token', response.data.accessToken);
             this.setIsAuth(true);
             this.setUser(response.data.user);
         } catch (e: any) {
             console.log(e.response?.data?.message);
-        } finally {
-            this.setIsLoading(false);
         }
     }
 };
