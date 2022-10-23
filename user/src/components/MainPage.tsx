@@ -10,6 +10,7 @@ import {observer} from "mobx-react-lite";
 import CustomerPage from "./customer/CustomerPage";
 import Navbar from "./navbar/Navbar";
 import GoodsPanel from "./goods_list/GoodsPanel";
+import Loading from "../common/Loading";
 
 const MainPage = observer(() => {
 
@@ -27,9 +28,7 @@ const MainPage = observer(() => {
 
     if (userStore.isLoading) {
         return (
-            <>
-                <div>Загрузка...</div>
-            </>
+            <Loading/>
         );
     }
 

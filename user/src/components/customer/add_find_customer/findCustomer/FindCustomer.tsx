@@ -44,6 +44,7 @@ function BasicExample() {
                         placeholder="+7 (777) 123 4567"
                         value={phone}
                         className={'phone__input'}
+                        style={{height: '40px', borderRadius: '7px', paddingLeft: '10px'}}
                         onChange={handleOnChangeInput}
                         onClick={() => setAutocompleteActive(!autoCompleteActive)}
                     />
