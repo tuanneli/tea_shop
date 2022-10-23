@@ -1,11 +1,23 @@
 import {makeAutoObservable} from "mobx";
 import {ICategory, IItem} from "../types/goodsTypes";
-import {AuthService, GoodsService} from "../api/API";
+import {GoodsService} from "../api/API";
 
 export default class GoodsStore {
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    _goodsLoading = false;
+
+    get goodsLoading() {
+        return this._goodsLoading;
+    }
+
+    _categoriesLoading = false;
+
+    get categoriesLoading() {
+        return this._categoriesLoading;
     }
 
     _categorySorted = "all";
@@ -26,6 +38,14 @@ export default class GoodsStore {
         return this._categories;
     }
 
+    setGoodsLoading(bool: boolean) {
+        this._goodsLoading = bool;
+    }
+
+    setCategoriesLoading(bool: boolean) {
+        this._categoriesLoading = bool;
+    }
+
     setCategorySorted(value: string) {
         this._categorySorted = value;
     }
@@ -40,23 +60,27 @@ export default class GoodsStore {
 
     async getGoods() {
         try {
+            this.setGoodsLoading(true)
             const response = await GoodsService.getItems();
             this.setGoods(response.data);
-            return response;
         } catch (e: any) {
             console.log(e.response?.data?.message);
             return e.response?.data?.message;
+        } finally {
+            this.setGoodsLoading(false)
         }
     }
 
     async getCategories() {
         try {
+            this.setCategoriesLoading(true);
             const response = await GoodsService.getCategories();
             this.setCategories(response.data);
-            return response;
         } catch (e: any) {
             console.log(e.response?.data?.message);
             return e.response?.data?.message;
+        } finally {
+            this.setCategoriesLoading(false);
         }
     }
 }

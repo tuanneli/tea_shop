@@ -7,17 +7,22 @@ import Register from "./login/Register";
 import Workers from "./workers/Workers";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
-import GoodsPanel from "./goods_list/GoodsPanel";
 import CustomerPage from "./customer/CustomerPage";
 import Navbar from "./navbar/Navbar";
+import GoodsPanel from "./goods_list/GoodsPanel";
 
 const MainPage = observer(() => {
 
-    const {userStore} = useContext(Context);
-    useEffect(() => {
+    const {userStore, goodsStore} = useContext(Context);
+
+    const checkAuthorization = async () => {
         if (localStorage.getItem('token')) {
-            userStore.checkAuth();
+            await userStore.checkAuth();
         }
+    }
+
+    useEffect(() => {
+        checkAuthorization();
     }, [])
 
     if (userStore.isLoading) {
@@ -32,7 +37,7 @@ const MainPage = observer(() => {
         setTimeout(() => {
             userStore.logout();
         }, 5000)
-    }
+    };
 
     if (userStore.isAuth && !userStore.user.isActivated) {
         logout();
@@ -48,40 +53,40 @@ const MainPage = observer(() => {
 
     return (
         <>
-            {/*{!userStore.isAuth ?*/}
-            {/*    <>*/}
-            {/*        <Routes>*/}
-            {/*            <Route path={'/login'} element={<Login/>}/>*/}
-            {/*            <Route path={'/register'} element={<Register/>}/>*/}
-            {/*            <Route path={'/*'} element={<Login/>}/>*/}
-            {/*        </Routes>*/}
-            {/*    </>*/}
-            {/*    :*/}
-            <>
-                <Navbar/>
-                {userStore.user.roles && userStore.user.roles[0] === 'ADMIN' ?
+            {!userStore.isAuth ?
+                <>
                     <Routes>
-                        <Route path={'/findCustomer'} element={<FindCustomer/>}/>
-                        <Route path={'/register'} element={<Register/>}/>
                         <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/addclient'} element={<AddClient/>}/>
-                        <Route path={'/goodslist'} element={<GoodsPanel/>}/>
-                        <Route path={'/workers'} element={<Workers/>}/>
-                        <Route path={'/customer'} element={<CustomerPage/>}/>
-                        <Route path={'/*'} element={<FindCustomer/>}/>
-                    </Routes>
-                    :
-                    <Routes>
-                        <Route path={'/findCustomer'} element={<FindCustomer/>}/>
                         <Route path={'/register'} element={<Register/>}/>
-                        <Route path={'/login'} element={<Login/>}/>
-                        <Route path={'/addclient'} element={<AddClient/>}/>
-                        <Route path={'/customer'} element={<CustomerPage/>}/>
-                        <Route path={'/*'} element={<FindCustomer/>}/>
+                        <Route path={'/*'} element={<Login/>}/>
                     </Routes>
-                }
-            </>
-            {/*}*/}
+                </>
+                :
+                <>
+                    <Navbar/>
+                    {userStore.user.roles && userStore.user.roles[0] === 'ADMIN' ?
+                        <Routes>
+                            <Route path={'/findCustomer'} element={<FindCustomer/>}/>
+                            <Route path={'/register'} element={<Register/>}/>
+                            <Route path={'/login'} element={<Login/>}/>
+                            <Route path={'/addclient'} element={<AddClient/>}/>
+                            <Route path={'/goodslist'} element={<GoodsPanel/>}/>
+                            <Route path={'/workers'} element={<Workers/>}/>
+                            <Route path={'/customer'} element={<CustomerPage/>}/>
+                            <Route path={'/*'} element={<FindCustomer/>}/>
+                        </Routes>
+                        :
+                        <Routes>
+                            <Route path={'/findCustomer'} element={<FindCustomer/>}/>
+                            <Route path={'/register'} element={<Register/>}/>
+                            <Route path={'/login'} element={<Login/>}/>
+                            <Route path={'/addclient'} element={<AddClient/>}/>
+                            <Route path={'/customer'} element={<CustomerPage/>}/>
+                            <Route path={'/*'} element={<FindCustomer/>}/>
+                        </Routes>
+                    }
+                </>
+            }
         </>
     );
 });

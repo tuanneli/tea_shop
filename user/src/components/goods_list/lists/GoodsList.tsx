@@ -1,5 +1,5 @@
-import React, {memo, useContext, useEffect, useState} from 'react';
-import {GoodsService, UsersService} from "../../../api/API";
+import React, {useContext, useEffect, useState} from 'react';
+import {GoodsService} from "../../../api/API";
 import {IItem} from "../../../types/goodsTypes";
 import AddItem from "../addMenu/AddItem";
 import {Context} from "../../../index";
@@ -7,16 +7,17 @@ import {observer} from "mobx-react-lite";
 import "../Goods.css";
 import "./Lists.css";
 import ConformationModal from "../../../common/ConformationModal";
+import {Add, Delete, Edit} from "@mui/icons-material";
 
 const GoodsList = () => {
     const [item, setItem] = useState<IItem>();
-    const [error, setError] = useState<string>("");
     const [newItem, setNewItem] = useState<boolean>(false);
     const [isActive, setIsActive] = useState<boolean>(false);
     const {goodsStore} = useContext(Context);
     const [showConformationModal, setShowConformationModal] = useState<boolean>(false);
     const [confirmed, setConfirmed] = useState<boolean>(false);
     const [itemForDelete, setItemForDelete] = useState<string>("");
+    const {innerWidth: width} = window;
 
     const getAllItems = () => {
         try {
@@ -61,30 +62,30 @@ const GoodsList = () => {
                     <div className={'categories-label col-12'}>ТОВАРЫ</div>
                 </div>
                 <div className="goods-row text-white row">
-                    <div className="goods-item col-4">Название</div>
-                    <div className="goods-item col-1">Категория</div>
-                    <div className="goods-item col-1">Цена</div>
-                    <div className="goods-item col-1">Есть</div>
-                    <div className="goods-item col-1">В акции</div>
-                    <button className='add-new-button col-4'
-                            onClick={handleAddItem}>Добавить
-                        товар
+                    <div className="goods-item p-md-2 p-0 col-md-3 col-lg-4 col-2">Название</div>
+                    <div className="goods-item p-md-2 p-0 col-md-2 col-lg-1 col-2">Категория</div>
+                    <div className="goods-item p-md-2 p-0 col-md-1 col-lg-1 col-2">Цена</div>
+                    <div className="goods-item p-md-2 p-0 col-md-1 col-lg-1 col-2">Есть</div>
+                    <div className="goods-item p-md-2 p-0 col-md-1 col-lg-1 col-2">В акции</div>
+                    <button className='add-new-button p-md-2 p-0 col-md-4 col-lg-4 col-2'
+                            onClick={handleAddItem}> {width > 1000 ? 'Добавить товар' : <Add/>}
                     </button>
                 </div>
                 {goodsStore.goods.length !== 0 && goodsStore.goods.map(item => {
                     if (item?.category?.name == goodsStore.categorySorted || goodsStore.categorySorted == "all") {
                         return <div key={item.name} className="goods-row text-white row">
-                            <div className="goods-item col-4">{item?.name}</div>
-                            <div className="goods-item col-1">{item?.category?.name}</div>
-                            <div className="goods-item col-1">{item?.price}</div>
-                            <div className="goods-item col-1">{item?.inStock ? "Да" : "Нет"}</div>
+                            <div className="goods-item p-md-2 p-0 col-md-3 col-lg-4 col-2">{item?.name}</div>
+                            <div className="goods-item p-md-2 p-0 col-md-2 col-lg-1 col-2">{item?.category?.name}</div>
+                            <div className="goods-item p-md-2 p-0 col-md-1 col-lg-1 col-2">{item?.price}</div>
                             <div
-                                className="goods-item col-1">{item?.inAction ? item.amountToAction : "Нет"}</div>
-                            <button className="remove-button col-2"
-                                    onClick={() => handleDelete(item.name)}>Удалить
+                                className="goods-item p-md-2 p-0 col-md-1 col-lg-1 col-2">{item?.inStock ? "Да" : "Нет"}</div>
+                            <div
+                                className="goods-item p-md-2 p-0 col-md-1 col-lg-1 col-2">{item?.inAction ? item.amountToAction : "Нет"}</div>
+                            <button className="remove-button p-md-2 p-0 col-md-2 col-lg-2 col-1"
+                                    onClick={() => handleDelete(item.name)}>{width > 1000 ? 'Удалить' : <Delete/>}
                             </button>
-                            <button className="change-button col-2"
-                                    onClick={() => handleChange(item)}>Изменить
+                            <button className="change-button p-md-2 p-0 col-md-2 col-lg-2 col-1"
+                                    onClick={() => handleChange(item)}> {width > 1000 ? 'Изменить' : <Edit/>}
                             </button>
                         </div>
                     }

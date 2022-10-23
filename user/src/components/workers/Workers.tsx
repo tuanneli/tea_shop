@@ -15,13 +15,17 @@ const Workers = () => {
     const [confirmed, setConfirmed] = useState<boolean>(false);
     const [itemForDelete, setItemForDelete] = useState<string>("");
     const {innerWidth: width} = window;
+    const [isLoading, setIsLoading] = useState(false);
 
     const getAllUsers = () => {
         try {
+            setIsLoading(true);
             UsersService.getUsers().then((result) => setUsers(result.data));
         } catch (e: any) {
             setError(e.message);
             console.log(e);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -42,7 +46,6 @@ const Workers = () => {
     };
 
     const handleConfirm = async (activationLink: string) => {
-        console.log(activationLink)
         const response = await AuthService.activate(activationLink);
         if (response?.data?.Message) {
             getAllUsers();

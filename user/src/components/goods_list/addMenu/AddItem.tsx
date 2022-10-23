@@ -1,9 +1,9 @@
-import React, {memo, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {Dropdown, Form} from "react-bootstrap";
 import {Context} from "../../../index";
-import {ICategory, IItem} from "../../../types/goodsTypes";
+import {IItem} from "../../../types/goodsTypes";
 import {observer} from "mobx-react-lite";
 import {GoodsService} from "../../../api/API";
 import "../Goods.css";
@@ -50,7 +50,6 @@ const AddItem = ({newItem, show, setShow, item}: IAddItem) => {
     }, [item])
 
     useEffect(() => {
-        console.log('here we are ')
         if (!inAction) {
             setAmountToAction("");
         }
